@@ -1,0 +1,99 @@
+@prefix bot: <https://w3id.org/bot#> .
+@prefix building: <http://bimerr.iot.linkeddata.es/def/building#> .
+@prefix dicbm: <https://w3id.org/digitalconstruction/0.3/BuildingMaterials#> .
+@prefix sosac: <https://anarubioruiz.github.io/sosac-ontology/sosac#> .
+@prefix sosactypes: <http://example.org/sosactypes#> .
+
+<outside> a bot:Zone .
+<home> a bot:Building ;
+    bot:hasStorey <storey1>, <storey2> .
+
+<storey1> a bot:Storey ;
+    bot:hasSpace <living_room>, <kitchen>, <stairs> .
+
+<storey2> a bot:Storey ;
+    bot:hasSpace <bedroom>, <bathroom>, <stairs> .
+
+<living_room> a bot:Space ;
+    bot:adjacentElement <w1>, <w3>, <w4>, <w10>, <vb1>, <vb2> ;
+    bot:adjacentZone <kitchen>, <stairs> ;
+    bot:containsElement <l1>, <os1>, <wc3> .
+
+<kitchen> a bot:Space ;
+    bot:adjacentElement <w1>, <w2>, <w3>, <vb1> ;
+    bot:adjacentZone <living_room> ;
+    bot:containsElement <l2>, <os2>, <ls2> .
+
+<bedroom> a bot:Space ;
+    bot:adjacentElement <w5>, <w7>, <w8>, <w9>, <w11>, <vb3> ;
+    bot:adjacentZone <bathroom>, <stairs> ;
+    bot:containsElement <l3>, <os3>, <ls3> .
+
+<bathroom> a bot:Space ;
+    bot:adjacentElement <w9>, <w5>, <w6>, <w8> ;
+    bot:adjacentZone <bedroom> ;
+    bot:containsElement <l4>, <os4> .
+
+<stairs> a bot:Space ;
+    bot:adjacentElement <w10>, <w11>, <vb2>, <vb3> ;
+    bot:adjacentZone <living_room>, <bedroom> .
+
+<d1> a building:Door ;
+    bot:interfaceOf <d1>, <outside> ;
+    dicbm:hasConstituentSet <d1_cs> .
+
+<d1_cs> a dicbm:ConstituentSet ;
+    dicbm:hasMaterial "glass" .
+
+<d9> a building:Door ;
+    bot:interfaceOf <bedroom>, <bathroom> ;
+    dicbm:hasConstituentSet <d9_cs> .
+
+<d9_cs> a dicbm:ConstituentSet ;
+    dicbm:hasMaterial "wood" .
+
+<vb1> a building:VirtualBoundary ;
+    bot:interfaceOf <living_room>, <kitchen> .
+
+<vb2> a building:VirtualBoundary ;
+    bot:interfaceOf <living_room>, <stairs> .
+
+<vb3> a building:VirtualBoundary ;
+    bot:interfaceOf <bedroom>, <stairs> .
+
+<w1> a building:Wall ;
+    bot:hasSubElement <d1> .
+
+<w2> a building:Wall ;
+    bot:hasSubElement <win2> .
+
+<w3> a building:Wall ;
+    bot:hasSubElement <win3> .
+
+<w9> a building:Wall ;
+    bot:hasSubElement <d9> .
+
+<w7> a building:Wall ;
+    bot:hasSubElement <win7> .
+
+<w4> a building:Wall .
+<w5> a building:Wall .
+<w6> a building:Wall .
+<w8> a building:Wall .
+<w10> a building:Wall .
+<w11> a building:Wall .
+<win2> a building:Window .
+<win3> a building:Window .
+<win7> a building:Window .
+
+<l1> a sosac:Device, sosactypes:SmartLight .
+<l2> a sosac:Device, sosactypes:SmartLight .
+<l3> a sosac:Device, sosactypes:SmartLight .
+<l4> a sosac:Device, sosactypes:SmartLight .
+<os1> a sosac:Device, sosactypes:OccupancySensor .
+<os2> a sosac:Device, sosactypes:OccupancySensor .
+<os3> a sosac:Device, sosactypes:OccupancySensor .
+<os4> a sosac:Device, sosactypes:OccupancySensor .
+<ls2> a sosac:Device, sosactypes:LightSensor .
+<ls3> a sosac:Device, sosactypes:LightSensor .
+<wc3> a sosac:Device, sosactypes:WindowCover .
