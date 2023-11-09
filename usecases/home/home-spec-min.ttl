@@ -62,8 +62,10 @@
 <d1_cs> a dicbm:ConstituentSet ;
     dicbm:hasMaterial "glass" .
 
+<win3> a building:Window ;
+    bot:hasElement <wc3> .
+
 <win2> a building:Window .
-<win3> a building:Window .
 <win7> a building:Window .
 
 <l1> a sosac:Device, sosactypes:SmartLight .
