@@ -14,12 +14,12 @@ To test whether a LLM (GPT-4 concretely) can generate commonsense behavior for s
 
 Considering that all scenarios have been crafted to test the LLM's ability to generate lighting automations, the uppercase letter in each case study's name signifies the type of lighting solution to be automated. For instance, the letter 'A' suggests that the challenge involves a standard lighting issue (such as turning on the lights when someone enters a room, if lights are present). The letter 'B' suggests more complex lighting challenges where typical light sources are not available (such as using the lights from a connected room to illuminate a space with non-functional lights).
 
-The set of case studies can be found in the usecases/ folder, organized as follows:
+The set of case studies can be found in the studycases/ folder, organized as follows:
 
-- `usecases/A.1/`: Contains the tests for Case Study A.1.
-- `usecases/B.1/`: Contains the tests for Case Study B.1.
-- `usecases/B.2/`: Contains the tests for Case Study B.2.
-- `usecases/B.3/`: Contains the tests for Case Study B.3.
+- `studycases/A.1/`: Contains the tests for Case Study A.1.
+- `studycases/B.1/`: Contains the tests for Case Study B.1.
+- `studycases/B.2/`: Contains the tests for Case Study B.2.
+- `studycases/B.3/`: Contains the tests for Case Study B.3.
 
 Inside each of these folders (`<usecase>`), the information is organized in the following manner:
 
