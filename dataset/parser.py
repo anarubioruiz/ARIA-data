@@ -5,7 +5,7 @@ import json
 from lighting_cases import cases
 
 
-file_name = 'data/ARIA_dataset'
+file_name = 'ARIA_dataset'
 text_intro = '''\
 I am ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
 
