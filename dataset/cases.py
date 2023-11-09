@@ -1,4 +1,4 @@
-cases = [
+lighting = [
     {
         'id': 'LTI1.1',
         'goal': 'illuminate',

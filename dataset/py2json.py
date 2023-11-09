@@ -2,7 +2,7 @@
 
 import json
 
-from lighting_cases import cases
+from cases import lighting as cases
 
 
 file_name = 'ARIA_dataset'
