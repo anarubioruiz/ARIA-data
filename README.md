@@ -14,7 +14,7 @@ To test whether a LLM (GPT-4 concretely) can generate commonsense behavior for s
 
 Considering that all scenarios have been crafted to test the LLM's ability to generate lighting automations, the uppercase letter in each case study's name signifies the type of lighting solution to be automated. For instance, the letter 'A' suggests that the challenge involves a standard lighting issue (such as turning on the lights when someone enters a room, if lights are present). The letter 'B' suggests more complex lighting challenges where typical light sources are not available (such as using the lights from a connected room to illuminate a space with non-functional lights).
 
-The set of case studies can be found in the studycases/ folder, organized as follows:
+The set of case studies can be found in the `studycases/` folder, organized as follows:
 
 - `studycases/A.1/`: Contains the tests for Case Study A.1.
 - `studycases/B.1/`: Contains the tests for Case Study B.1.
@@ -24,10 +24,10 @@ The set of case studies can be found in the studycases/ folder, organized as fol
 Inside each of these folders (`<usecase>`), the information is organized in the following manner:
 
 - `<usecase>/README.md`: contains all the information about the study case, including the description of the scenario, the tests performed, and the results obtained.
-- `<usecase>/scenario.<ext>`: Contains the floor plan of the scenario (the file may be split into different images if the scenario is too large), where <ext> can be any image file extension such as png, jpg, etc.
+- `<usecase>/scenario.<ext>`: Contains the floor plan of the scenario (the file may be split into different images if the scenario is too large), where `<ext>` can be any image file extension such as png, jpg, etc.
 - `<usecase>/scenario-ineditor.json`: Contains the scenario description in JSON format, ready to be imported into the IndoorGML editor, InEditor.
 - `<usecase>/scenario-indoorgml.gml`: Contains the IndoorGML description of the scenario.
-- `<usecase>/scenario-ontologies.ttl`: Contains the scenario description in RDF format using the BOT (Building Topology Ontology), DICBM (Digital Capability-Based Model), and SOSAc (SOSA Capabilities) ontologies.
+- `<usecase>/scenario-ontologies.ttl`: Contains the scenario description in RDF format using the BOT (Building Topology Ontology), DICBM (Digital Construction - Building Materials), and SOSAc (SOSA Capabilities) ontologies.
 - `<usecase>/tests/`: Contains the tests performed for the case study.
 
 ### Tests
@@ -44,5 +44,8 @@ Given this context, the tests performed for each case study can be found in the 
 
 Within each of these directories (`<usecase>/tests/<system>/`), the information is structured as follows:
 
-- `text-zero-shot.md` and `structured-zero-shot.md`: Contain the tests performed using the zero-shot learning technique, with the LLM provided with the scenario description in plain text and structured format, respectively.
-- `text-few-shot.md` and `structured-few-shot.md`: Contain the tests performed using the few-shot learning technique, with the LLM provided with the scenario description in plain text and structured format, respectively.
+- `t-zeroshot.md` and `s-zeroshot.md`: Contain the tests performed using the zero-shot learning technique, with the LLM provided with the scenario description in plain text and structured format, respectively.
+- `t-fewshot.md` and `s-fewshot.md`: Contain the tests performed using the few-shot learning technique, with the LLM provided with the scenario description in plain text and structured format, respectively.
+  `t-fewshot-exp.md` and `s-fewshot-exp.md`: Contain the tests performed using the few-shot learning technique, giving an explanation of the rules generated for each example and with the scenario descriptions in plain text and structured format, respectively.
+
+It is important to note that certain directories or files may not exist for some case studies.
