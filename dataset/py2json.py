@@ -14,20 +14,20 @@ From a description of an IoT scenario, along with the goal that the automation r
 '''
 
     for case in lighting.cases:
-        entry = dict(case)
+        entry = dict()
         entry['input_text'] = f'''\
 {text_intro}
 
 ### IoT DEPLOYMENT:
-{entry['scenario']}
+{case['scenario']}
 
 ### GOAL:
-{entry['goal']}
+{case['goal']}
 
 ### TARGET:
-{entry['target']}
+{case['target']}
 '''
-        entry['output_text'] = entry['rules']
+        entry['output_text'] = case['rules']
         data.append(entry)
 
     return data

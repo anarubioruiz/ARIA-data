@@ -29,3 +29,5 @@ Herramientas de Google Cloud
 - Pasos de entrenamiento: X (es complicado definir los pasos de entrenamiento sin conocer el batch size. Otros usuarios de la comunidad, tras hacer algunas pruebas, comentan que es probable que el tamaño de batch sea 64. En este sentido, cogiendo nuestro dataset y dividiéndolo por 64, podemos establecer qué paso de entrenamiento se necesitan para cada época (epoch, 3-5) ¿50?)
 - Multiplicador de tasa de aprendizaje: 1. Normalmente se define entre 3 y 5. Esto es un multiplicador del ratio, pero no sabemos cuál es este ratio.
 - Tipo de acelerador: TPU 64x cores de una TPU v3
+- 163 casos para el dataset de entrenamiento
+- 10 casos de evaluación con un intervalo de evaluación de 20 pasos
