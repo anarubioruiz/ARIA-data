@@ -77,7 +77,143 @@ To incorporate a voice assistant to:
 - Modify automations in real time: "Consider the sunset time is 30 minutes later".
 - The light is turned on only when presence is detected and the user has not used the voice assistant to say that he/she is going to sleep. The normal behaviour is restored when the user uses the voice assistant to say that he/she is waking up (HA intents).
 
+# Training
+v1:
+- epochs: 3
+- batch_size: 1
+- gradient accumulation: 1
+- learning rate: 2e-4
 
+v2: uso de más memoria, mejores resultados
+- epochs: 5
+- batch_size: 2
+- gradient accumulation: 1
+- learning rate: 2e-4
+
+v3: mucho peor, uso de más memoria
+- epochs: 3
+- batch_size: 2
+- gradient accumulation: 2
+- learning rate: 1e-5
+
+Ejemplos de v2:
+--------------------
+Prompt:
+### INSTRUCTION:
+You are ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
+Below, the scenario description, the goal and the target of the automation rules to generate are provided as INPUT. Write the Home Assistant automation rules (YAML) for this INPUT as OUTPUT.
+
+### INPUT:
+-- The scenario is: I want to control the behaviour of the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a walland and a sensor to monitor the occupancy of the room.
+
+-- The goal is: illuminate
+
+-- The target is: hall
+
+### OUTPUT:
+
+
+
+Generated instruction:
+
+- description: "Switch off hall light when no one is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.hall_occupancy_detector
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.hall_light
+- description: "Switch on hall light when someone is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.hall_occupancy_detector
+    to: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.hall_light
+
+
+
+Ground truth:
+
+- description: "Turn on hall light when occupancy detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.hall_occupancy_sensor
+    to: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.hall_smart_lamp
+- description: "Turn off hall light when no occupancy detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.hall_occupancy_sensor
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.hall_smart_lamp
+
+-------------
+Prompt:
+### INSTRUCTION:
+You are ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
+Below, the scenario description, the goal and the target of the automation rules to generate are provided as INPUT. Write the Home Assistant automation rules (YAML) for this INPUT as OUTPUT.
+
+### INPUT:
+-- The scenario is: The café includes two adjacent areas, a seating area and a bar. Both areas are fitted with a light source, an occupancy sensor, and a light sensor.
+
+-- The goal is: illuminate
+
+-- The target is: bar
+
+### OUTPUT:
+
+
+
+Generated instruction:
+
+- description: "Illuminate bar when occupied"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.bar_occupancy
+  action:
+    service: light.turn_off
+    entity_id: light.bar_light
+  condition:
+    - condition: state
+      entity_id: binary_sensor.bar_occupancy
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.bar_light_level
+      below: 200
+- description: "Illuminate bar when not occupied"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.bar_occupancy
+  action:
+    service: light.turn_on
+    entity_id: light.bar_light
+  condition:
+    - condition: state
+      entity_id: binary_sensor.bar_occupancy
+      state: "off"
+    - condition: numeric_state
+      entity_id: sensor.bar_light_level
+      above: 200
+
+
+
+Ground truth:
+
+- description: "Illuminate bar when occupied and light is needed"
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.bar_light_level
+    below: 200
+  action:
+    service: light.turn_on
+    entity_id: light.bar_light
 
 <!-- ------------------------------------------------ -->
 

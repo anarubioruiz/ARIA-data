@@ -7,7 +7,7 @@ import lighting
 
 def PaLM_data():
     data = []
-    text_intro = '''\
+    instruction = '''\
 You are ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
 
 From a description of an IoT scenario, along with the goal that the automation rules should achieve and the specific entity of interest, the target, you'll generate the rules for me. Let's start!
@@ -16,16 +16,13 @@ From a description of an IoT scenario, along with the goal that the automation r
     for case in lighting.cases:
         entry = dict(case)
         entry['input_text'] = f'''\
-{text_intro}
+{instruction}
 
-### IoT DEPLOYMENT:
-{entry['scenario']}
+-- The scenario is: {case['scenario']}
 
-### GOAL:
-{entry['goal']}
+-- The goal is: {case['goal']}
 
-### TARGET:
-{entry['target']}
+-- The target is: {case['target']}
 '''
         entry['output_text'] = entry['rules']
         data.append(entry)
@@ -35,29 +32,30 @@ From a description of an IoT scenario, along with the goal that the automation r
 
 def LLaMA_data():
     data = []
-    text_intro = '''\
-I am ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
-Below is the description of a scenario, the purpose of the automation rules, and the entity of interest, the target.
-'''
 
     for case in lighting.cases:
-        entry = dict(case)
-        entry['text'] = f'''\
-{text_intro}
+        entry = dict()
+        entry['instruction'] = '''\
+You are ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
+Below, the scenario description, the goal and the target of the automation rules to generate are provided as INPUT. Write the Home Assistant automation rules (YAML) for this INPUT as OUTPUT.'''
 
-### IoT DEPLOYMENT
-{entry['scenario']}
+        entry['input'] = f'''\
+-- The scenario is: {case['scenario']}
 
-### GOAL
-{entry['goal']}
+-- The goal is: {case['goal']}
 
-### TARGET
-{entry['target']}
+-- The target is: {case['target']}'''
 
-### RULES
-According to the IoT DEPLOYMENT described, the Home Assistant automation rules (YAML) that accomplish the GOAL for the TARGET are:
+        entry['output'] = case['rules']
+        entry['prompt'] = f'''\
+### INSTRUCTION:
+{entry['instruction']}
 
-{entry['rules']}
+### INPUT:
+{entry['input']}
+
+### OUTPUT:
+{entry['output']}
 '''
         data.append(entry)
     return data
