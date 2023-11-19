@@ -1,60 +1,102 @@
 #!/usr/bin/python3
 
 import json
+import random
+import lighting
 
-from cases import lighting as cases
 
+def PaLM_data():
+    data = []
+    text_intro = '''\
+You are ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
 
-file_name = 'ARIA_dataset'
-text_intro = '''\
-I am ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
-
-From a description of an IoT scenario, along with the goal that the automation rules should achieve and the specific entity of interest, the target, I'll generate the rules for you. Let's start!
+From a description of an IoT scenario, along with the goal that the automation rules should achieve and the specific entity of interest, the target, you'll generate the rules for me. Let's start!
 '''
 
+    for case in lighting.cases:
+        entry = dict(case)
+        entry['input_text'] = f'''\
+{text_intro}
 
-def prepare_data():
-    for case in cases:
-        scenario = case['scenario']
-        goal = case['goal']
-        target = case['target']
-        rules = case['rules']
+### IoT DEPLOYMENT:
+{entry['scenario']}
 
-        case['text'] = f'''\
+### GOAL:
+{entry['goal']}
+
+### TARGET:
+{entry['target']}
+'''
+        entry['output_text'] = entry['rules']
+        data.append(entry)
+
+    return data
+
+
+def LLaMA_data():
+    data = []
+    text_intro = '''\
+I am ARIA, an Automation Rules Intelligence Assistant capable of creating Home Assistant rules for a particular IoT deployment.
+Below is the description of a scenario, the purpose of the automation rules, and the entity of interest, the target.
+'''
+
+    for case in lighting.cases:
+        entry = dict(case)
+        entry['text'] = f'''\
 {text_intro}
 
 ### IoT DEPLOYMENT
-{scenario}
+{entry['scenario']}
 
 ### GOAL
-{goal}
+{entry['goal']}
 
 ### TARGET
-{target}
+{entry['target']}
 
 ### RULES
-According to the IoT DEPLOYMENT described, the Home Assistant automation rules that accomplish the GOAL for the TARGET are:
+According to the IoT DEPLOYMENT described, the Home Assistant automation rules (YAML) that accomplish the GOAL for the TARGET are:
 
-```yaml
-{rules}
-```
+{entry['rules']}
 '''
+        data.append(entry)
+    return data
 
 
-def write_jsonl():
+datasets = {
+    'PaLM': PaLM_data,
+    'LLaMA': LLaMA_data,
+}
+
+
+def write_jsonl(file_name, data):
     with open(file_name + '.jsonl', 'w') as f:
-        for case in cases:
+        for case in data:
             f.write(json.dumps(case) + '\n')
 
 
-def write_json():
+def write_json(file_name, data):
     with open(file_name + '.json', 'w') as f:
-        json.dump(cases, f, indent=2)
+        json.dump(data, f, indent=2)
 
 
-prepare_data()
-write_jsonl()
-write_json()
+def divide_data(data):
+    random.shuffle(data)
+    test_data = data[:10]
+    train_data = data[10:]
+    return {'train': train_data, 'test': test_data}
 
-print(f'Done! {len(cases)} cases')
-print(f'Check data/{file_name}.<jsonl/json>')
+
+def process_data(dataset_name):
+    data = datasets[dataset_name]()
+    data = divide_data(data)
+    for key, value in data.items():
+        write_jsonl(f'{dataset_name}_{key}', value)
+        write_json(f'{dataset_name}_{key}', value)
+
+
+process_data('PaLM')
+process_data('LLaMA')
+
+print(f'Done! {len(lighting.cases)-10} training cases (10 for testing)')
+print(f'Check data/')
