@@ -6394,7 +6394,7 @@ I can not find rules for alternative lighting.
         'id': 'LATI11.1.1',
         'goal': 'illuminate, exclude primary light fixtures',
         'target': 'meeting room',
-        'scenario': 'The scenario is an office composed by two main areas: a meeting room and a desktop area. These two spaces are not conected, but are adjacent by a glass wall. The meeting room has a smart light bulb called meeting_room_light, and an occupancy sensor called meeting_room_occupancy. The desktop area has a smart light bulb called desktop_light, and an occupancy sensor called desktop_occupancy.',
+        'scenario': 'The scenario is an office composed by two main areas: a meeting room and a desktop area. These two spaces are not connected, but are adjacent by a glass wall. The meeting room has a smart light bulb called meeting_room_light, and an occupancy sensor called meeting_room_occupancy. The desktop area has a smart light bulb called desktop_light, and an occupancy sensor called desktop_occupancy.',
         'rules':
 '''
 - description: "Alternative lighting - Illuminate the meeting room with desktop lights when occupancy detected at the meeting room"
@@ -6430,7 +6430,7 @@ I can not find rules for alternative lighting.
         'id': 'LATI11.1.2',
         'goal': 'illuminate, exclude primary light fixtures',
         'target': 'desktop area',
-        'scenario': 'The scenario is an office composed by two main areas: a meeting room and a desktop area. These two spaces are not conected, but are adjacent by a glass wall. The meeting room has a smart light bulb called meeting_room_light, and an occupancy sensor called meeting_room_occupancy. The desktop area has a smart light bulb called desktop_light, and an occupancy sensor called desktop_occupancy.',
+        'scenario': 'The scenario is an office composed by two main areas: a meeting room and a desktop area. These two spaces are not connected, but are adjacent by a glass wall. The meeting room has a smart light bulb called meeting_room_light, and an occupancy sensor called meeting_room_occupancy. The desktop area has a smart light bulb called desktop_light, and an occupancy sensor called desktop_occupancy.',
         'rules':
 '''
 - description: "Alternative lighting - Illuminate the desktop with meeting room lights when occupancy detected at the desktop area"

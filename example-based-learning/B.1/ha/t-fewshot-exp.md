@@ -136,7 +136,7 @@ No rules are generated because alternative lighting is not possible in this scen
 
 ## START
 ### IoT DEPLOYMENT
-The scenario is an office composed by two main areas: a meeting room and a desktop area. These two spaces are not conected, but are adjacent by a glass wall. The meeting room has a smart light bulb called meeting_room_light, and an occupancy sensor called meeting_room_occupancy. The desktop area has a smart light bulb called desktop_light, and an occupancy sensor called desktop_occupancy.
+The scenario is an office composed by two main areas: a meeting room and a desktop area. These two spaces are not connected, but are adjacent by a glass wall. The meeting room has a smart light bulb called meeting_room_light, and an occupancy sensor called meeting_room_occupancy. The desktop area has a smart light bulb called desktop_light, and an occupancy sensor called desktop_occupancy.
 
 ### GOAL
 illuminate, exclude primary light fixtures
