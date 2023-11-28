@@ -111,3 +111,34 @@ illuminate
 studio
 
 <!-- response -->
+
+### RULES
+```
+% Automation 1
+action(turn_on, studio_smart_bulb) :- cond(1), cond(2), cond(3).
+cond(1) :- observation(studio_occupancy, OB_ID),
+           hasSimpleResult(observation(studio_occupancy, OB_ID), "on").
+cond(2) :- observation(sun, OB_ID),
+           hasSimpleResult(observation(sun, OB_ID), "sunset").
+cond(3) :- not observation(studio_curtain, OB_ID),
+           hasSimpleResult(observation(studio_curtain, OB_ID), "open").
+
+% Automation 2
+action(close, studio_curtain) :- cond(1), cond(4), cond(5).
+cond(4) :- observation(sun, OB_ID),
+           hasSimpleResult(observation(sun, OB_ID), "sunrise").
+cond(5) :- not observation(studio_curtain, OB_ID),
+           hasSimpleResult(observation(studio_curtain, OB_ID), "open").
+
+% Automation 3
+action(open, studio_curtain) :- cond(1), cond(2), cond(6).
+cond(6) :- observation(studio_curtain, OB_ID),
+           hasSimpleResult(observation(studio_curtain, OB_ID), "close").
+
+% Automation 4
+action(turn_off, studio_smart_bulb) :- cond(7).
+cond(7) :- observation(studio_occupancy, OB_ID),
+           hasSimpleResult(observation(studio_occupancy, OB_ID), "off").
+```
+
+In this set of rules for the studio, the automations are designed to control both the smart bulb and the automated curtains based on occupancy, sunlight conditions, and the state of the curtains. The rules ensure that the studio is adequately illuminated by either natural or artificial light while considering the occupancy of the room.

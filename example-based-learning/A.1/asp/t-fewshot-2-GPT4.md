@@ -111,3 +111,21 @@ illuminate
 kitchen
 
 <!-- response -->
+
+### RULES
+```
+% Automation 1
+action(turn_on, main_light) :- cond(1), cond(2).
+cond(1) :- observation(kitchen_occupancy, OB_ID),
+           hasSimpleResult(observation(kitchen_occupancy, OB_ID), "on").
+cond(2) :- observation(kitchen_light_level, OB_ID),
+           hasSimpleResult(observation(kitchen_light_level, OB_ID), VALUE),
+           VALUE < 150.  % light level < 150 lux
+
+% Automation 2
+action(turn_off, main_light) :- cond(3).
+cond(3) :- observation(kitchen_occupancy, OB_ID),
+           hasSimpleResult(observation(kitchen_occupancy, OB_ID), "off").
+```
+
+These rules are designed to automate the lighting in the kitchen based on occupancy and light level. The first set of conditions ensures the 'Main Light' turns on when the kitchen is occupied and the light level is below 150 lux. The second automation turns off the light when the kitchen is not occupied.

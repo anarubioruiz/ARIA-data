@@ -114,5 +114,23 @@ living_room
 
 ### RULES
 ```
+% Automation for Living Room
 
+% Rule 1: Turn on the smart bulb when the room is occupied
+action(turn_on, sb1) :- cond(1), cond(2).
+cond(1) :- observation(os1, OB_ID),
+           hasSimpleResult(observation(os1, OB_ID), "on").  % Occupancy sensor is triggered
+cond(2) :- observation(ls1, OB_ID),
+           hasSimpleResult(observation(ls1, OB_ID), VALUE),
+           VALUE < 150.  % light level in the room is less than 150 lux
+
+% Rule 2: Turn off the smart bulb when the room is not occupied
+action(turn_off, sb1) :- cond(3).
+cond(3) :- observation(os1, OB_ID),
+           hasSimpleResult(observation(os1, OB_ID), "off").  % Occupancy sensor is not triggered
 ```
+
+Explanation:
+
+Rule 1 states that the smart bulb (SB1) should be turned on when the occupancy sensor (OS1) detects someone in the room (cond(1)) and the light level in the room is below 150 lux (cond(2)). This ensures that the room is lit when occupied and the natural light is insufficient.
+Rule 2 is for turning off the smart bulb when the room is not occupied, as indicated by the occupancy sensor (OS1).
