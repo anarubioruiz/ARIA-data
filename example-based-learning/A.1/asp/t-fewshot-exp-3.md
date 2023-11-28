@@ -1,8 +1,8 @@
-You need to function as ARIA, an Automation Rules Intelligence Assistant capable of creating Answer Set Programming rules for a particular IoT deployment. These rules will utilize the ASP-Core-2 language format and incorporate SOSA ontology class and property names as syntax.
+You need to operate as ARIA, an Automation Rules Intelligence Assistant capable of creating Answer Set Programming rules for the functioning of a specific intelligent environment. These rules will follow the ASP-Core-2 language format and will incorporate concepts similar to those in the SOSA ontology for syntax.
 
-Here's how it works: I'll provide you with a description of an IoT scenario, along with the goal that the automation should achieve, and the specific entity we're interested in: the target. After that, you'll generate the rules for us.
+Here's how it works: I will provide a description of an scenario (if something does not appear in the description, assume it is not present), the goal that the automation rules should achieve, and information about the specific entity of interest: the target. Subsequently, you will generate the rules only for that target, by accomplishing the goal.
 
-Now, I'll give you some example cases, and your task is to complete the final case by applying common sense, just as has been done in the previous cases.
+Now, I will present some example cases. Your task is to complete the final case by applying common sense, following the examples, and using the information provided.
 
 ## START
 ### IoT DEPLOYMENT
@@ -106,7 +106,7 @@ cond(4) :- observation(sun, OB_ID),
 ```
 
 ### EXPLANATION
-The first rule turns on the kitchen light when occupancy is detected and it is nighttime. The second rule turns off the kitchen light when there is no occupancy or it is daytime because, in the latter case, natural light can be utilized through the window (assuming there are no blinds).
+The first rule turns on the kitchen light when occupancy is detected and it is nighttime, because there is no natural light. The second rule turns off the kitchen light when there is no occupancy or it is daytime because, in the latter case, natural light can be utilized through the window (assuming there are no blinds).
 ## END
 
 ## START
@@ -124,36 +124,38 @@ studio
 ## RULES
 ```
 % Automation 1
-action(turn_on, studio_smart_lamp) :- cond(1), cond(2), cond(3).
-cond(1) :- observation(studio_occupancy_detector, OB_ID),
-           hasSimpleResult(observation(studio_occupancy_detector, OB_ID), "on").
+action(turn_on, studio_smart_bulb) :- cond(1), cond(2), cond(3).
+cond(1) :- observation(studio_occupancy, OB_ID),
+           hasSimpleResult(observation(studio_occupancy, OB_ID), "on").
 cond(2) :- observation(sun, OB_ID),
            hasSimpleResult(observation(sun, OB_ID), "sunset").
-cond(3) :- observation(studio_curtains, OB_ID),
-           hasSimpleResult(observation(studio_curtains, OB_ID), "close").
+cond(3) :- observation(studio_light_level, OB_ID),
+           hasSimpleResult(observation(studio_light_level, OB_ID), VALUE),
+           VALUE < 150.  % light level < 150 lux
 
 % Automation 2
 action(open, studio_curtains)       :- cond(1), cond(4), cond(5).
-action(turn_off, studio_smart_lamp) :- cond(1), cond(4), cond(5).
+action(turn_off, studio_smart_bulb) :- cond(1), cond(4), cond(5).
 cond(4) :- observation(sun, OB_ID),
            hasSimpleResult(observation(sun, OB_ID), "sunrise").
 cond(5) :- observation(studio_curtains, OB_ID),
            hasSimpleResult(observation(studio_curtains, OB_ID), "close").
 
 % Automation 3
-action(turn_on, studio_smart_lamp) :- cond(1), cond(4), cond(6).
+action(turn_on, studio_smart_bulb) :- cond(1), cond(4), cond(3), cond(6).
 cond(6) :- observation(studio_curtains, OB_ID),
            hasSimpleResult(observation(studio_curtains, OB_ID), "open").
 
 % Automation 4
-action(turn_off, studio_smart_lamp) :- cond(7).
-cond(7) :- observation(studio_occupancy_detector, OB_ID),
-           hasSimpleResult(observation(studio_occupancy_detector, OB_ID), "off").
+action(turn_off, studio_smart_bulb) :- cond(7).
+cond(7) :- observation(studio_occupancy, OB_ID),
+           hasSimpleResult(observation(studio_occupancy, OB_ID), "off").
+
 ```
 
 ## EXPLANATION
-For the studio:
-1. The first rule turns on the studio lamp when there's someone in the studio, it's nighttime, and the curtains are closed. The assumption is that the curtains might be closed during the night or when privacy is needed.
-2. The second rule opens the curtains and turns off the studio lamp when the room is occupied, it's daytime, and the curtains are currently closed. This is to utilize the natural light during the day.
-3. The third rule turns on the studio lamp if the room is occupied, it's daytime, and despite the curtains being open, additional light is deemed necessary (possibly due to a cloudy day or the position of the windows).
-4. The fourth rule turns off the studio lamp when the room is not occupied, ensuring energy is not wasted by keeping the light on when nobody is present in the room.
+In the studio, four rules can be generated:
+- Automation 1 turns on the studio's smart bulb when occupancy is detected, if it is nighttime (sunset observed), and the light level is below 150 lux. This caters to the need for artificial lighting during low natural light conditions.
+- Automation 2 aims to utilize natural light by opening the curtains and turning off the smart bulb during the day (sunrise observed), if the studio is occupied and the curtains are currently closed.
+- Automation 3 addresses situations where, even during the day with the curtains open, the natural light is insufficient (light level below 150 lux). In such cases, the smart bulb is turned on.
+- Automation 4 ensures energy efficiency by turning off the smart bulb when the studio is not occupied, irrespective of the time of day or light conditions.

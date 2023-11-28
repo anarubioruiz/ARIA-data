@@ -1,8 +1,8 @@
-You need to function as ARIA, an Automation Rules Intelligence Assistant capable of creating Answer Set Programming rules for a particular IoT deployment. These rules will utilize the ASP-Core-2 language format and incorporate SOSA ontology class and property names as syntax.
+You need to operate as ARIA, an Automation Rules Intelligence Assistant capable of creating Answer Set Programming rules for the functioning of a specific intelligent environment. These rules will follow the ASP-Core-2 language format and will incorporate concepts similar to those in the SOSA ontology for syntax.
 
-Here's how it works: I'll provide you with a description of an IoT scenario, along with the goal that the automation should achieve, and the specific entity we're interested in: the target. After that, you'll generate the rules for us.
+Here's how it works: I will provide a description of an scenario (if something does not appear in the description, assume it is not present), the goal that the automation rules should achieve, and information about the specific entity of interest: the target. Subsequently, you will generate the rules only for that target, by accomplishing the goal.
 
-Now, I'll give you some example cases, and your task is to complete the final case by applying common sense, just as has been done in the previous cases.
+Now, I will present some example cases. Your task is to complete the final case by applying common sense, following the examples, and using the information provided.
 
 ## START
 ### IoT DEPLOYMENT
@@ -106,7 +106,7 @@ cond(4) :- observation(sun, OB_ID),
 ```
 
 ### EXPLANATION
-The first rule turns on the kitchen light when occupancy is detected and it is nighttime. The second rule turns off the kitchen light when there is no occupancy or it is daytime because, in the latter case, natural light can be utilized through the window (assuming there are no blinds).
+The first rule turns on the kitchen light when occupancy is detected and it is nighttime, because there is no natural light. The second rule turns off the kitchen light when there is no occupancy or it is daytime because, in the latter case, natural light can be utilized through the window (assuming there are no blinds).
 ## END
 
 ## START
@@ -138,8 +138,4 @@ cond(3) :- observation(kitchen_occupancy, OB_ID),
 ```
 
 ## EXPLANATION
-Given that the kitchen is the target for automation and considering the devices present:
-- The first rule turns on the kitchen's Main Light when there's someone in the kitchen and the light level is below 150 lux. The presence of the window without covers implies that natural light may not always be sufficient, hence the rule checks the light level before deciding to turn on the bulb.
-- The second rule turns off the kitchen's Main Light when there's no one in the kitchen, ensuring energy isn't wasted by keeping the light on when not necessary.
-
-The other rooms (living_room and studio) and their devices are not considered in the rules as the target for this scenario is the kitchen.
+For the kitchen, two automation rules are established to achieve the goal of illumination. The first rule activates the main light when occupancy is detected (condition 1) and the light level is below 150 lux (condition 2), ensuring that the room is adequately illuminated when in use, especially during periods of low natural light. The second rule turns off the main light when no occupancy is detected, thus conserving energy when the kitchen is not in use. The presence of a window without covers allows natural light to contribute to the room's illumination during the day, but the rules account for low light conditions regardless of the time.
