@@ -26,14 +26,14 @@
 
 <d1> a building:Door ;
     bot:interfaceOf <studio>, <living_room> ;
-    bot:hasElement <door_sensor_d1> .
+    bot:hasSubElement <door_sensor_d1> .
 
 <d2> a building:Door ;
     bot:interfaceOf <kitchen>, <living_room> .
 
 <win2> a building:Window .
 <win1> a building:Window ;
-    bot:hasElement <studio_cover> .
+    bot:hasSubElement <studio_cover> .
 
 <sb1> a sosac:Device, sosactypes:SmartLight .
 <studio_light> a sosac:Device, sosactypes:SmartLight .

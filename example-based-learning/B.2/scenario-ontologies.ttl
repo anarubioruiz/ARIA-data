@@ -9,7 +9,8 @@
 
 <family_room> a bot:Space ;
     bot:adjacentZone <kitchen_nook> ;
-    bot:containsElement <family_room_lamp>, <family_room_sensor> .
+    bot:containsElement <family_room_lamp>, <family_room_sensor> ;
+    bot:hasElement <win1> .
 
 <kitchen_nook> a bot:Space ;
     bot:adjacentZone <family_room> ;
@@ -19,7 +20,7 @@
     bot:interfaceOf <kitchen_nook>, <family_room> .
 
 <win1> a building:Window ;
-    bot:hasElement <family_room_curtains> .
+    bot:hasSubElement <family_room_curtains> .
 
 <d0> a building:Door ;
     bot:interfaceOf <kitchen_nook> .
