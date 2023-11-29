@@ -192,3 +192,58 @@ illuminate
 kitchen
 
 <!-- response -->
+
+### RULES
+```
+- description: "Turn on Main Light in the kitchen when it's dark and someone is present"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_occupancy
+      to: "on"
+    - platform: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 250
+  condition:
+    - condition: state
+      entity_id: binary_sensor.kitchen_occupancy
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 250
+  action:
+    service: light.turn_on
+    entity_id: light.main_light
+
+- description: "Turn off Main Light in the kitchen when no one is present"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.kitchen_occupancy
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.main_light
+
+- description: "Turn on Main Light in the kitchen during daytime if it's dark and someone is present"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_occupancy
+      to: "on"
+    - platform: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 250
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+    - condition: state
+      entity_id: binary_sensor.kitchen_occupancy
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 250
+  action:
+    service: light.turn_on
+    entity_id: light.main_light
+```
+
+These rules will ensure that the kitchen's 'Main Light' turns on when someone is present and the light level is below a specified threshold, accommodating for both day and night scenarios. The light will automatically turn off when the kitchen is unoccupied.

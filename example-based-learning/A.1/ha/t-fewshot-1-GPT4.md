@@ -192,3 +192,35 @@ illuminate
 living_room
 
 <!-- response -->
+
+### RULES
+```
+- description: "Turn on the living room light when someone is present and it's dark"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.os1
+      to: "on"
+    - platform: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 200
+  condition:
+    - condition: state
+      entity_id: binary_sensor.os1
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 200
+  action:
+    service: light.turn_on
+    entity_id: light.sb1
+- description: "Turn off the living room light when no one is there"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.os1
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.sb1
+```
+
+These rules are designed to automate the lighting in the living room, ensuring lights are on when needed (presence detected and insufficient natural light) and off when the room is unoccupied. The light sensor in the kitchen is used as a reference for the lighting needs in the living room, given the proximity and potentially similar light conditions.

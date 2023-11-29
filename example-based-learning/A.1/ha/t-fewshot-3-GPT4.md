@@ -192,3 +192,59 @@ illuminate
 studio
 
 <!-- response -->
+
+### RULES
+```
+- description: "Turn on the studio light when occupancy is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.studio_occupancy
+    to: "on"
+  condition:
+    condition: state
+    entity_id: binary_sensor.studio_occupancy
+    state: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.studio_smart_bulb
+
+- description: "Turn off the studio light when no occupancy is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.studio_occupancy
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.studio_smart_bulb
+
+- description: "Open studio curtains when it's daytime and occupancy is detected"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.studio_occupancy
+      to: "on"
+    - platform: sun
+      event: sunrise
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+    - condition: state
+      entity_id: binary_sensor.studio_occupancy
+      state: "on"
+  action:
+    service: cover.open_cover
+    entity_id: cover.studio_window_curtains
+
+- description: "Close studio curtains at sunset or when no occupancy is detected"
+  trigger:
+    - platform: sun
+      event: sunset
+    - platform: state
+      entity_id: binary_sensor.studio_occupancy
+      to: "off"
+  action:
+    service: cover.close_cover
+    entity_id: cover.studio_window_curtains
+```
+
+These rules ensure the studio is well illuminated when occupied, using natural light during the day and artificial light when necessary. The curtains open when the studio is occupied during the day and close at night or when it's unoccupied.
