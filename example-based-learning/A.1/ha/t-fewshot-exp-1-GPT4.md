@@ -201,3 +201,26 @@ illuminate
 living_room
 
 <!-- response -->
+
+### RULES
+```
+- description: "Turn on the living room light when occupancy is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.os1
+    to: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.sb1
+- description: "Turn off the living room light when no occupancy is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.os1
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.sb1
+```
+
+### EXPLANATION
+Given the devices and setup in the living room, two rules are formulated. The first rule activates the light (SB1) when someone is present in the room, as detected by the occupancy sensor (OS1). This rule ensures that the living room is illuminated whenever it's occupied. The second rule deactivates the light when no one is in the room, indicated by the occupancy sensor. This rule helps conserve energy by ensuring the light is only on when needed. There's no consideration for natural light or window covers in the living room, as these are not part of the deployment.

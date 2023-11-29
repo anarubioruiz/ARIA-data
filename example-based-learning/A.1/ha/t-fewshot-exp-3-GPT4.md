@@ -201,3 +201,53 @@ illuminate
 studio
 
 <!-- response -->
+
+### RULES
+```
+- description: "Turn on studio light when occupancy detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.studio_occupancy_detector
+    to: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.studio_smart_bulb
+- description: "Turn off studio light when no occupancy detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.studio_occupancy_detector
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.studio_smart_bulb
+- description: "Open studio curtains when occupancy detected during the day"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.studio_occupancy_detector
+      to: "on"
+    - platform: sun
+      event: sunrise
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+    - condition: state
+      entity_id: binary_sensor.studio_occupancy_detector
+      state: "on"
+  action:
+    service: cover.open_cover
+    entity_id: cover.studio_automated_curtains
+- description: "Close studio curtains when no occupancy detected or at sunset"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.studio_occupancy_detector
+      to: "off"
+    - platform: sun
+      event: sunset
+  action:
+    service: cover.close_cover
+    entity_id: cover.studio_automated_curtains
+```
+
+### EXPLANATION
+For the studio, four automation rules are created. The first rule turns on the studio light when occupancy is detected. This rule is straightforward, as the presence of an individual in the studio necessitates illumination. The second rule turns off the light when the studio is unoccupied, conserving energy when lighting is not required. The third rule opens the studio curtains during the daytime when occupancy is detected, utilizing natural light and reducing the need for artificial lighting. The last rule closes the curtains either when the studio is unoccupied, ensuring privacy and security, or at sunset, preparing the studio for evening privacy and reducing heat loss in colder months.
