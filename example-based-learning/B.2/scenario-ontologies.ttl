@@ -1,0 +1,30 @@
+@prefix bot: <https://w3id.org/bot#> .
+@prefix building: <http://bimerr.iot.linkeddata.es/def/building#> .
+@prefix dicbm: <https://w3id.org/digitalconstruction/0.3/BuildingMaterials#> .
+@prefix sosac: <https://anarubioruiz.github.io/sosac-ontology/sosac#> .
+@prefix sosactypes: <http://example.org/sosactypes#> .
+
+<home> a bot:Building ;
+    bot:hasSpace <family_room>, <kitchen_nook> .
+
+<family_room> a bot:Space ;
+    bot:adjacentZone <kitchen_nook> ;
+    bot:containsElement <family_room_lamp>, <family_room_sensor> .
+
+<kitchen_nook> a bot:Space ;
+    bot:adjacentZone <family_room> ;
+    bot:containsElement <kitchen_nook_light>, <kitchen_nook_sensor> .
+
+<vb1> a building:VirtualBoundary ;
+    bot:interfaceOf <kitchen_nook>, <family_room> .
+
+<win1> a building:Window ;
+    bot:hasElement <family_room_curtains> .
+
+<d0> a building:Door ;
+    bot:interfaceOf <kitchen_nook> .
+
+<family_room_lamp> a sosac:Device, sosactypes:SmartLight .
+<kitchen_nook_light> a sosac:Device, sosactypes:SmartLight .
+<family_room_sensor> a sosac:Device, sosactypes:OccupancySensor .
+<kitchen_nook_sensor> a sosac:Device, sosactypes:OccupancySensor .

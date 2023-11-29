@@ -1,0 +1,46 @@
+@prefix bot: <https://w3id.org/bot#> .
+@prefix building: <http://bimerr.iot.linkeddata.es/def/building#> .
+@prefix dicbm: <https://w3id.org/digitalconstruction/0.3/BuildingMaterials#> .
+@prefix sosac: <https://anarubioruiz.github.io/sosac-ontology/sosac#> .
+@prefix sosactypes: <http://example.org/sosactypes#> .
+
+<home> a bot:Building ;
+    bot:hasSpace <living_room>, <kitchen>, <studio> .
+
+<living_room> a bot:Space ;
+    bot:adjacentZone <kitchen>, <studio> ;
+    bot:containsElement <sb1>, <os1> .
+
+<kitchen> a bot:Space ;
+    bot:adjacentZone <living_room>, <studio> ;
+    bot:containsElement <main_light>, <kitchen_occupancy>, <kitchen_light_level> ;
+    bot:hasElement <win2> .
+
+<studio> a bot:Space ;
+    bot:adjacentZone <living_room>, <kitchen> ;
+    bot:containsElement <studio_light>, <studio_occupancy>, <studio_light_level>;
+    bot:hasElement <win1> .
+
+<d0> a building:Door ;
+    bot:interfaceOf <kitchen> .
+
+<d1> a building:Door ;
+    bot:interfaceOf <studio>, <living_room> ;
+    bot:hasElement <door_sensor_d1> .
+
+<d2> a building:Door ;
+    bot:interfaceOf <kitchen>, <living_room> .
+
+<win2> a building:Window .
+<win1> a building:Window ;
+    bot:hasElement <studio_cover> .
+
+<sb1> a sosac:Device, sosactypes:SmartLight .
+<studio_light> a sosac:Device, sosactypes:SmartLight .
+<main_light> a sosac:Device, sosactypes:SmartLight .
+<os1> a sosac:Device, sosactypes:OccupancySensor .
+<studio_occupancy> a sosac:Device, sosactypes:OccupancySensor .
+<kitchen_occupancy> a sosac:Device, sosactypes:OccupancySensor .
+<studio_light_level> a sosac:Device, sosactypes:LightSensor .
+<kitchen_light_level> a sosac:Device, sosactypes:LightSensor .
+<studio_cover> a sosac:Device, sosactypes:WindowCover .

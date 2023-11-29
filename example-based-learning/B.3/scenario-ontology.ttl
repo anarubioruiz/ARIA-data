@@ -1,0 +1,27 @@
+@prefix bot: <https://w3id.org/bot#> .
+@prefix building: <http://bimerr.iot.linkeddata.es/def/building#> .
+@prefix dicbm: <https://w3id.org/digitalconstruction/0.3/BuildingMaterials#> .
+@prefix sosac: <https://anarubioruiz.github.io/sosac-ontology/sosac#> .
+@prefix sosactypes: <http://example.org/sosactypes#> .
+
+<home> a bot:Building ;
+    bot:hasSpace <den>, <music_room> .
+
+<den> a bot:Space ;
+    bot:adjacentZone <music_room> ;
+    bot:containsElement <den_light>, <den_occupancy> .
+
+<music_room> a bot:Space ;
+    bot:adjacentZone <den> ;
+    bot:containsElement <music_room_light>, <music_room_occupancy> .
+
+<d0> a building:Door ;
+    bot:interfaceOf <music_room> .
+
+<d2> a building:Door ;
+    bot:interfaceOf <music_room>, <den> .
+
+<den_light> a sosac:Device, sosactypes:SmartLight .
+<music_room_light> a sosac:Device, sosactypes:SmartLight .
+<den_occupancy> a sosac:Device, sosactypes:OccupancySensor .
+<music_room_occupancy> a sosac:Device, sosactypes:OccupancySensor .

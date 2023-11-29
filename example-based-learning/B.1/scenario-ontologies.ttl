@@ -1,0 +1,42 @@
+@prefix bot: <https://w3id.org/bot#> .
+@prefix building: <http://bimerr.iot.linkeddata.es/def/building#> .
+@prefix dicbm: <https://w3id.org/digitalconstruction/0.3/BuildingMaterials#> .
+@prefix sosac: <https://anarubioruiz.github.io/sosac-ontology/sosac#> .
+@prefix sosactypes: <http://example.org/sosactypes#> .
+
+<home> a bot:Building ;
+    bot:hasSpace <meeting_room>, <desktops> .
+
+<meeting_room> a bot:Space ;
+    bot:adjacentZone <desktops> ;
+    bot:containsElement <meeting_room_light>, <meeting_room_occupancy> .
+
+<desktops> a bot:Space ;
+    bot:adjacentZone <meeting_room> ;
+    bot:containsElement <desktops_light>, <desktops_occupancy> .
+
+<wall5> a building:Wall ;
+    bot:interfaceOf <meeting_room>, <desktops> ;
+    dicbm:hasConstituentSet <wall5_cs> .
+
+<door1> a building:Door ;
+    bot:interfaceOf <meeting_room> ;
+    dicbm:hasConstituentSet <door1_cs> .
+
+<door2> a building:Door ;
+    bot:interfaceOf <desktops> ;
+    dicbm:hasConstituentSet <door2_cs> .
+
+<wall5_cs> a dicbm:ConstituentSet ;
+    dicbm:hasMaterial "glass" .
+
+<door1_cs> a dicbm:ConstituentSet ;
+    dicbm:hasMaterial "glass" .
+
+<door2_cs> a dicbm:ConstituentSet ;
+    dicbm:hasMaterial "glass" .
+
+<meeting_room_light> a sosac:Device, sosactypes:SmartLight .
+<desktops_light> a sosac:Device, sosactypes:SmartLight .
+<meeting_room_occupancy> a sosac:Device, sosactypes:OccupancySensor .
+<desktops_occupancy> a sosac:Device, sosactypes:OccupancySensor .
