@@ -326,3 +326,38 @@ illuminate
 studio
 
 <!-- response -->
+
+### RULES
+
+```prolog
+% Automation 1: Turn on the studio light when the studio is occupied and the light level is insufficient.
+action(turn_on, studio_light) :- cond(1), cond(2).
+cond(1) :- observation(studio_occupancy, OB_ID),
+           hasSimpleResult(observation(studio_occupancy, OB_ID), "on").
+cond(2) :- observation(studio_light_level, OB_ID),
+           hasSimpleResult(observation(studio_light_level, OB_ID), VALUE),
+           VALUE < 150.  % light level < 150 lux
+
+% Automation 2: Turn off the studio light when the studio is not occupied.
+action(turn_off, studio_light) :- cond(3).
+cond(3) :- observation(studio_occupancy, OB_ID),
+           hasSimpleResult(observation(studio_occupancy, OB_ID), "off").
+
+% Automation 3: Open the window cover when the studio is occupied, the light level is low, and it's daytime.
+action(open, studio_cover) :- cond(1), cond(2), cond(4).
+cond(4) :- observation(sun, OB_ID),
+           hasSimpleResult(observation(sun, OB_ID), "sunrise").
+
+% Automation 4: Close the window cover when the studio is not occupied or it's nighttime.
+action(close, studio_cover) :- { cond(3); cond(5) } = 1.
+cond(5) :- observation(sun, OB_ID),
+           hasSimpleResult(observation(sun, OB_ID), "sunset").
+```
+
+### EXPLANATION
+1. **Automation 1** activates the studio light when there is someone in the studio and the ambient light level is below 150 lux, indicating insufficient natural light.
+2. **Automation 2** turns off the studio light when the studio is unoccupied to save energy.
+3. **Automation 3** opens the window cover during the day if the studio is occupied and the light level is low, allowing natural light to enhance illumination.
+4. **Automation 4** ensures the window cover is closed either during the night or when the studio is not occupied, for privacy or energy efficiency reasons.
+
+These rules collectively aim to maintain optimal lighting conditions in the studio, utilizing both artificial and natural light efficiently while considering occupancy.

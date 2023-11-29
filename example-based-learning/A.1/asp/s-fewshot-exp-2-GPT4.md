@@ -326,3 +326,37 @@ illuminate
 kitchen
 
 <!-- response -->
+
+### RULES
+```
+% Automation 1: Turn on kitchen light when the kitchen is occupied and the light level is low
+action(turn_on, main_light) :- cond(1), cond(2).
+cond(1) :- observation(kitchen_occupancy, OB_ID),
+           hasSimpleResult(observation(kitchen_occupancy, OB_ID), "on").
+cond(2) :- observation(kitchen_light_level, OB_ID),
+           hasSimpleResult(observation(kitchen_light_level, OB_ID), VALUE),
+           VALUE < 150.  % light level < 150 lux
+
+% Automation 2: Turn off kitchen light when kitchen is not occupied
+action(turn_off, main_light) :- cond(3).
+cond(3) :- observation(kitchen_occupancy, OB_ID),
+           hasSimpleResult(observation(kitchen_occupancy, OB_ID), "off").
+
+% Automation 3: Turn on kitchen light when the kitchen is occupied and it is nighttime
+action(turn_on, main_light) :- cond(1), cond(4).
+cond(4) :- observation(sun, OB_ID),
+           hasSimpleResult(observation(sun, OB_ID), "sunset").
+
+% Automation 4: Turn off kitchen light when it is daytime to use natural light
+action(turn_off, main_light) :- cond(5).
+cond(5) :- observation(sun, OB_ID),
+           hasSimpleResult(observation(sun, OB_ID), "sunrise").
+```
+
+### EXPLANATION
+1. **Automation 1** turns on the kitchen light when the kitchen is occupied and the ambient light level is below 150 lux, indicating it's too dark.
+2. **Automation 2** ensures energy efficiency by turning off the light when the kitchen is not occupied.
+3. **Automation 3** activates the kitchen light during the nighttime when the kitchen is occupied, assuming no natural light is available.
+4. **Automation 4** turns off the kitchen light during the daytime, promoting the use of natural light through the windows. This assumes the presence of windows in the kitchen and no obstruction to natural light.
+
+These rules collectively aim to maintain adequate lighting in the kitchen while optimizing energy usage based on occupancy and natural light conditions.
