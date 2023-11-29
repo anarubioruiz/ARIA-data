@@ -27,8 +27,8 @@ cond(3) :- observation(ls1, OB_ID),
            VALUE < 150.  % light level < 150 lux
 
 % Automation 2
-action(open, ws1)       :- cond(1), cond(3), cond(4), cond(5).
-action(turn_off, lamp1) :- cond(1), cond(3), cond(4), cond(5).
+action(open, ws1)       :- cond(1), cond(4), cond(5).
+action(turn_off, lamp1) :- cond(1), cond(4), cond(5).
 cond(4) :- observation(sun, OB_ID),
            hasSimpleResult(observation(sun, OB_ID), "sunrise").
 cond(5) :- observation(ws1, OB_ID),
@@ -75,7 +75,7 @@ cond(3) :- observation(ps1, OB_ID),
 
 ## START
 ### IoT DEPLOYMENT
-The scenario is conformed by the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a walland and a sensor to monitor the occupancy of the room.
+The scenario is conformed by the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a wall and a sensor to monitor the occupancy of the room.
 
 ### GOAL
 illuminate
@@ -86,15 +86,15 @@ kitchen
 ### RULES
 ```
 action(turn_on, kitchen_smart_lamp) :- cond(1), cond(2).  % cond(1) and cond(2) are true
-cond(1) :- observation(ps1, OB_ID),
-           hasSimpleResult(observation(ps1, OB_ID), "on").
+cond(1) :- observation(kitchen_occupancy_sensor, OB_ID),
+           hasSimpleResult(observation(kitchen_occupancy_sensor, OB_ID), "on").
 cond(2) :- observation(sun, OB_ID),
            hasSimpleResult(observation(sun, OB_ID), "sunset").
 
 % Automation 2
 action(turn_off, kitchen_smart_lamp) :- { cond(3); cond(4) } = 1.  % cond(3) or cond(4) is true
-cond(3) :- observation(ps1, OB_ID),
-           hasSimpleResult(observation(ps1, OB_ID), "off").
+cond(3) :- observation(kitchen_occupancy_sensor, OB_ID),
+           hasSimpleResult(observation(kitchen_occupancy_sensor, OB_ID), "off").
 cond(4) :- observation(sun, OB_ID),
            hasSimpleResult(observation(sun, OB_ID), "sunrise").
 ```

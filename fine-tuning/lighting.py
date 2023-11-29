@@ -5420,7 +5420,7 @@ cases = [
         'id': 'LTI13.1.1',
         'goal': 'illuminate',
         'target': 'kitchen',
-        'scenario': "I want to control the behaviour of the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a walland and a sensor to monitor the occupancy of the room.",  # Not connected
+        'scenario': "I want to control the behaviour of the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a wall and a sensor to monitor the occupancy of the room.",  # Not connected
         'rules':
 '''
 - description: "Turn off the lamp when no occupancy detected or when the sun rises in the kitchen"
@@ -5456,7 +5456,7 @@ cases = [
         'id': 'LTI13.1.2',
         'goal': 'illuminate',
         'target': 'hall',
-        'scenario': "I want to control the behaviour of the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a walland and a sensor to monitor the occupancy of the room.",  # Not connected
+        'scenario': "I want to control the behaviour of the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a wall and a sensor to monitor the occupancy of the room.",  # Not connected
         'rules':
 '''
 - description: "Turn on hall light when occupancy detected"

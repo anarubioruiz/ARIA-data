@@ -104,7 +104,7 @@ You are ARIA, an Automation Rules Intelligence Assistant capable of creating Hom
 Below, the scenario description, the goal and the target of the automation rules to generate are provided as INPUT. Write the Home Assistant automation rules (YAML) for this INPUT as OUTPUT.
 
 ### INPUT:
--- The scenario is: I want to control the behaviour of the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a walland and a sensor to monitor the occupancy of the room.
+-- The scenario is: I want to control the behaviour of the kitchen and the hall lighting systems. While in the kitchen there is a smart lamp, a window and an occupancy sensor, in the hall there is a smart lamp located in a wall and a sensor to monitor the occupancy of the room.
 
 -- The goal is: illuminate
 
