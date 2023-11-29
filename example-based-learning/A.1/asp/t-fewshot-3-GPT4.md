@@ -48,7 +48,7 @@ cond(7) :- observation(os1, OB_ID),
 
 ## START
 ### IoT DEPLOYMENT
-The space to automate, my den, is equipped with a smart fixture named Den Light, an occupancy sensor named Den Occupancy, and another sensor, Den Light Detector, that measures brightness. No window covers are in the kitchen (but there are windows).
+The space to automate, my den, is equipped with a smart fixture named Den Light, an occupancy sensor named Den Occupancy, and another sensor, Den Light Detector, that measures brightness. No window covers are in the den (but there are windows).
 
 ### GOAL
 illuminate
