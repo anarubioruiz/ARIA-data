@@ -348,3 +348,55 @@ illuminate, exclude primary light fixtures
 kitchen nook
 
 <!-- response -->
+
+### IoT DEPLOYMENT
+- **Spaces:** family_room, kitchen_nook
+- **Doors:** d0 (connecting kitchen nook and another unspecified area)
+- **Virtual Boundary:** vb1 (between kitchen nook and family room)
+- **Window:** win1 (in family room)
+- **Devices:**
+  - family_room_lamp (smart light in family room)
+  - kitchen_nook_light (smart light in kitchen nook)
+  - family_room_sensor (occupancy sensor in family room)
+  - kitchen_nook_sensor (occupancy sensor in kitchen nook)
+
+### GOAL
+To illuminate the kitchen nook while excluding primary light fixtures.
+
+### TARGET
+kitchen nook
+
+### RULES
+```yaml
+- description: "Alternative lighting - Turn on family room light when occupancy detected in kitchen nook and vb1 is open"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.kitchen_nook_sensor
+    to: "on"
+  condition:
+    - condition: state
+      entity_id: input_boolean.kitchen_nook_alternative_lighting
+      state: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.family_room_lamp
+
+- description: "Alternative lighting - Turn off family room light when no occupancy detected in kitchen nook"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.kitchen_nook_sensor
+    to: "off"
+  condition:
+    - condition: state
+      entity_id: input_boolean.kitchen_nook_alternative_lighting
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.family_room_sensor
+      state: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.family_room_lamp
+```
+
+### EXPLANATION
+These rules are designed to illuminate the kitchen nook using alternative light sources, specifically the family room light. The first rule activates the family room lamp when occupancy is detected in the kitchen because virtual boundary (vb1) between the kitchen nook and family room allows light to pass through. The second rule deactivates the family room lamp when there is no occupancy detected in the kitchen nook, and also no occupancy in the family room, ensuring efficient use of lighting.

@@ -353,3 +353,37 @@ illuminate, exclude primary light fixtures
 meeting room
 
 <!-- response -->
+
+### RULES
+```yaml
+- description: "Alternative lighting - turn on desktops light when occupancy detected in meeting room"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.meeting_room_occupancy
+    to: "on"
+  condition:
+    - condition: state
+      entity_id: input_boolean.meeting_room_alternative_lighting
+      state: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.desktops_light
+- description: "Alternative lighting - turn off desktops light when no occupancy detected in meeting room"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.meeting_room_occupancy
+    to: "off"
+  condition:
+    - condition: state
+      entity_id: input_boolean.meeting_room_alternative_lighting
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.desktops_occupancy
+      state: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.desktops_light
+```
+
+### EXPLANATION
+These rules are designed to use the light from the desktops area to illuminate the meeting room, avoiding the use of primary light fixtures in the meeting room. The first rule turns on the desktops light when there is occupancy in the meeting room, assuming that the light from the desktops can illuminate the meeting room through the glass walls and doors. The second rule turns off the desktops light when there is no occupancy detected in the meeting room and also no occupancy in the desktops area, ensuring lights are not left on unnecessarily.

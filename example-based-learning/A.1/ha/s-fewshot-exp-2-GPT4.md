@@ -407,3 +407,55 @@ illuminate
 kitchen
 
 <!-- response -->
+
+Based on the provided IoT deployment and the goal to illuminate the kitchen, the following Home Assistant automation rules can be generated for the kitchen:
+
+```yaml
+- description: "Turn on the kitchen light when occupancy is detected and it's dark"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.kitchen_occupancy
+      to: "on"
+    - platform: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 200
+  condition:
+    - condition: state
+      entity_id: binary_sensor.kitchen_occupancy
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 200
+  action:
+    service: light.turn_on
+    entity_id: light.main_light
+
+- description: "Turn off the kitchen light when no occupancy is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.kitchen_occupancy
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.main_light
+
+- description: "Automatically turn off kitchen light when there is enough natural light"
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.kitchen_light_level
+    above: 250
+  condition:
+    condition: state
+    entity_id: light.main_light
+    state: "on"
+  action:
+    service: light.turn_off
+    entity_id: light.main_light
+```
+
+### EXPLANATION
+1. **Light On with Occupancy and Low Light**: The first rule turns on the main light in the kitchen when someone is present (occupancy sensor is "on") and the light level is below 200 lux, indicating it's dark.
+
+2. **Light Off with No Occupancy**: The second rule is straightforward; it turns off the main light when there is no one in the kitchen (occupancy sensor is "off").
+
+3. **Automatic Light Off in Bright Conditions**: The third rule turns off the kitchen light if the natural light level exceeds 250 lux, suggesting that artificial lighting is not needed. This rule only triggers if the light is already on.

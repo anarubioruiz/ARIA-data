@@ -326,3 +326,21 @@ illuminate
 kitchen
 
 <!-- response -->
+
+### RULES
+```
+action(turn_on, main_light) :- cond(1), cond(2).
+cond(1) :- observation(kitchen_occupancy, OB_ID),
+hasSimpleResult(observation(kitchen_occupancy, OB_ID), "on").
+cond(2) :- observation(kitchen_light_level, OB_ID),
+hasSimpleResult(observation(kitchen_light_level, OB_ID), VALUE),
+VALUE < 150.
+
+action(turn_off, main_light) :- cond(3).
+cond(3) :- observation(kitchen_occupancy, OB_ID),
+hasSimpleResult(observation(kitchen_occupancy, OB_ID), "off").
+```
+
+### EXPLANATION
+The first rule turns on the kitchen light if there is occupancy and the light level is insufficient. The second rule turns off the kitchen light if there is no occupancy.
+## END

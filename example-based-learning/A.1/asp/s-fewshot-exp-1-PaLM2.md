@@ -326,3 +326,20 @@ illuminate
 living_room
 
 <!-- response -->
+
+### RULES
+```
+action(turn_on, sb1) :- cond(1), cond(2).
+cond(1) :- observation(os1, OB_ID),
+hasSimpleResult(observation(os1, OB_ID), "on").
+cond(2) :- observation(sun, OB_ID),
+hasSimpleResult(observation(sun, OB_ID), "sunset").
+
+action(turn_off, sb1) :- cond(3).
+cond(3) :- observation(os1, OB_ID),
+hasSimpleResult(observation(os1, OB_ID), "off").
+```
+
+### EXPLANATION
+The first rule turns on the living room light when occupancy is detected and it is nighttime, because there is no natural light. The second rule turns off the living room light when there is no occupancy, as it is not necessary for the room to be illuminated when there is no one in it.
+## END

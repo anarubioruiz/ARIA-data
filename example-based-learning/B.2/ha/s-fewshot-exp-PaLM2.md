@@ -348,3 +348,35 @@ illuminate, exclude primary light fixtures
 kitchen nook
 
 <!-- response -->
+
+### RULES
+```yaml
+- description: "Alternative lighting - turn on family room lamp when occupancy detected at kitchen nook"
+trigger:
+platform: state
+entity_id: binary_sensor.kitchen_nook_sensor
+to: "on"
+condition:
+- condition: state
+entity_id: input_boolean.kitchen_nook_alternative_lighting
+state: "on"
+action:
+service: light.turn_on
+entity_id: light.family_room_lamp
+- description: "Alternative lighting - turn off family room lamp when no occupancy detected at kitchen nook"
+trigger:
+platform: state
+entity_id: binary_sensor.kitchen_nook_sensor
+to: "off"
+condition:
+- condition: state
+entity_id: input_boolean.kitchen_nook_alternative_lighting
+state: "on"
+action:
+service: light.turn_off
+entity_id: light.family_room_lamp
+```
+
+### EXPLANATION
+The rules illuminate the kitchen nook with fixtures that are not the primary ones. The first rule turns on the family room lamp when occupancy is detected at the kitchen nook. The second rule turns off the family room lamp when no occupancy is detected at the kitchen nook.
+## END

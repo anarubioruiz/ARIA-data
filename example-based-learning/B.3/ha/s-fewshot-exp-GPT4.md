@@ -344,3 +344,40 @@ illuminate, exclude primary light fixtures
 den
 
 <!-- response -->
+
+### RULES
+```yaml
+- description: "Alternative lighting - Turn on music room light when occupancy detected in the den"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.den_occupancy
+    to: "on"
+  condition:
+    - condition: state
+      entity_id: input_boolean.den_alternative_lighting
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.d0
+      state: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.music_room_light
+- description: "Alternative lighting - Turn off music room light when no occupancy detected in the den"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.den_occupancy
+    to: "off"
+  condition:
+    - condition: state
+      entity_id: input_boolean.den_alternative_lighting
+      state: "on"
+    - condition: state
+      entity_id: binary_sensor.music_room_occupancy
+      state: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.music_room_light
+```
+
+### EXPLANATION
+These rules aim to illuminate the den using lighting fixtures that are not the primary ones within the den. The first rule turns on the music room light when occupancy is detected in the den, provided that the `den_alternative_lighting` input boolean is on, and the door connecting the music room and the den (door d0) is open. This allows light from the music room to illuminate the den. The second rule turns off the music room light when there is no occupancy detected in the den and no occupancy in the music room. This ensures that the music room light is used for illumination in the den only when needed.

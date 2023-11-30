@@ -407,3 +407,48 @@ illuminate
 kitchen
 
 <!-- response -->
+
+```
+- description: "Turn on the kitchen light when it's dark and someone is there"
+trigger:
+- platform: state
+entity_id: binary_sensor.kitchen_occupancy
+to: "on"
+- platform: numeric_state
+entity_id: sensor.kitchen_light_level
+below: 200
+condition:
+- condition: state
+entity_id: binary_sensor.kitchen_occupancy
+state: "on"
+- condition: numeric_state
+entity_id: sensor.kitchen_light_level
+below: 200
+action:
+service: light.turn_on
+entity_id: light.main_light
+- description: "Turn off the kitchen light when empty"
+trigger:
+platform: state
+entity_id: binary_sensor.kitchen_occupancy
+to: "off"
+action:
+service: light.turn_off
+entity_id: light.main_light
+- description: "Turn off the kitchen light when the door opens"
+trigger:
+platform: state
+entity_id: binary_sensor.door_sensor_d1
+to: "open"
+action:
+service: light.turn_off
+entity_id: light.main_light
+- description: "Turn on the kitchen light when the door closes"
+trigger:
+platform: state
+entity_id: binary_sensor.door_sensor_d1
+to: "closed"
+action:
+service: light.turn_on
+entity_id: light.main_light
+```

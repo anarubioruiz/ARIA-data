@@ -407,3 +407,32 @@ illuminate
 living_room
 
 <!-- response -->
+
+To achieve the goal of illumination in the living room, considering the available devices and their functionalities as described in the IoT deployment, the following Home Assistant automation rules can be generated:
+
+### RULES
+```yaml
+- description: "Turn on the living room light when occupancy is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.os1
+    to: "on"
+  action:
+    service: light.turn_on
+    entity_id: light.sb1
+
+- description: "Turn off the living room light when no occupancy is detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.os1
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.sb1
+```
+
+### EXPLANATION
+- The first rule activates the living room light (`light.sb1`) when the occupancy sensor (`binary_sensor.os1`) detects someone in the living room. This ensures that the room is illuminated when it is being used.
+- The second rule deactivates the living room light when the occupancy sensor no longer detects presence. This is a measure to conserve energy when the living room is not in use.
+
+These rules do not consider natural light levels as there is no light sensor in the living room, and they operate purely based on occupancy detection.

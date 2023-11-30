@@ -407,3 +407,35 @@ illuminate
 living_room
 
 <!-- response -->
+
+### RULES
+```
+- description: "Turn on the living room light when someone enters the living room"
+trigger:
+- platform: state
+entity_id: binary_sensor.os1
+to: "on"
+condition:
+- condition: state
+entity_id: binary_sensor.os1
+state: "on"
+action:
+service: light.turn_on
+entity_id: light.sb1
+- description: "Turn off the living room light when no one is in the living room for more than 10 minutes"
+trigger:
+- platform: state
+entity_id: binary_sensor.os1
+to: "off"
+for: '00:10:00'
+condition:
+- condition: state
+entity_id: binary_sensor.os1
+state: "off"
+action:
+service: light.turn_off
+entity_id: light.sb1
+```
+
+### EXPLANATION
+The first rule turns on the living room light when someone enters the living room. The second rule turns off the living room light when no one is in the living room for more than 10 minutes.

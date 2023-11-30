@@ -326,3 +326,32 @@ illuminate
 studio
 
 <!-- response -->
+
+### RULES
+```
+% Automation 1
+action(turn_on, studio_light) :- cond(1), cond(2), cond(3).
+cond(1) :- observation(studio_occupancy, OB_ID),
+hasSimpleResult(observation(studio_occupancy, OB_ID), "on").
+cond(2) :- observation(studio_light_level, OB_ID),
+hasSimpleResult(observation(studio_light_level, OB_ID), VALUE),
+VALUE < 150. % light level < 150 lux
+cond(3) :- observation(door_sensor_d1, OB_ID),
+hasSimpleResult(observation(door_sensor_d1, OB_ID), "closed").
+
+% Automation 2
+action(turn_off, studio_light) :- cond(4).
+cond(4) :- observation(studio_occupancy, OB_ID),
+hasSimpleResult(observation(studio_occupancy, OB_ID), "off").
+
+% Automation 3
+action(open, studio_cover) :- cond(1), cond(2), cond(3).
+action(turn_off, studio_light) :- cond(1), cond(2), cond(3).
+cond(3) :- observation(sun, OB_ID),
+hasSimpleResult(observation(sun, OB_ID), "sunrise").
+
+% Automation 4
+action(close, studio_cover) :- cond(4).
+cond(4) :- observation(sun, OB_ID),
+hasSimpleResult(observation(sun, OB_ID), "sunset").
+```
