@@ -313,36 +313,39 @@ studio
 <!-- response -->
 
 ### RULES
-
-```prolog
-% Automation 1: Turn on the studio light when the studio is occupied and the light level is insufficient.
+```
+% Automation 1
 action(turn_on, studio_light) :- cond(1), cond(2).
 cond(1) :- observation(studio_occupancy, OB_ID),
            hasSimpleResult(observation(studio_occupancy, OB_ID), "on").
-cond(2) :- observation(studio_light_level, OB_ID),
-           hasSimpleResult(observation(studio_light_level, OB_ID), VALUE),
-           VALUE < 150.  % light level < 150 lux
+cond(2) :- observation(sun, OB_ID),
+           hasSimpleResult(observation(sun, OB_ID), "sunset").
 
-% Automation 2: Turn off the studio light when the studio is not occupied.
+% Automation 2
 action(turn_off, studio_light) :- cond(3).
 cond(3) :- observation(studio_occupancy, OB_ID),
            hasSimpleResult(observation(studio_occupancy, OB_ID), "off").
 
-% Automation 3: Open the window cover when the studio is occupied, the light level is low, and it's daytime.
-action(open, studio_cover) :- cond(1), cond(2), cond(4).
+% Automation 3
+action(open, studio_cover)       :- cond(1), cond(4), cond(5).
+action(turn_off, studio_light) :- cond(1), cond(4), cond(5).
 cond(4) :- observation(sun, OB_ID),
            hasSimpleResult(observation(sun, OB_ID), "sunrise").
+cond(5) :- observation(studio_cover, OB_ID),
+           hasSimpleResult(observation(studio_cover, OB_ID), "close").
 
-% Automation 4: Close the window cover when the studio is not occupied or it's nighttime.
-action(close, studio_cover) :- { cond(3); cond(5) } = 1.
-cond(5) :- observation(sun, OB_ID),
-           hasSimpleResult(observation(sun, OB_ID), "sunset").
+% Automation 4
+action(turn_on, studio_light) :- cond(1), cond(4), cond(6), cond(7).
+cond(6) :- observation(studio_cover, OB_ID),
+           hasSimpleResult(observation(studio_cover, OB_ID), "open").
+cond(7) :- observation(kitchen_light_level, OB_ID),
+           hasSimpleResult(observation(kitchen_light_level, OB_ID), VALUE),
+           VALUE < 150.  % light level < 150 lux
 ```
 
 ### EXPLANATION
-1. **Automation 1** activates the studio light when there is someone in the studio and the ambient light level is below 150 lux, indicating insufficient natural light.
-2. **Automation 2** turns off the studio light when the studio is unoccupied to save energy.
-3. **Automation 3** opens the window cover during the day if the studio is occupied and the light level is low, allowing natural light to enhance illumination.
-4. **Automation 4** ensures the window cover is closed either during the night or when the studio is not occupied, for privacy or energy efficiency reasons.
+In the studio environment, four rules are designed to achieve the goal of illumination. The first rule turns on the studio light when occupancy is detected and it is nighttime. This is based on the assumption that sunset indicates the absence of natural light. The second rule turns off the studio light when no occupancy is detected, to save energy when the room is not in use.
 
-These rules collectively aim to maintain optimal lighting conditions in the studio, utilizing both artificial and natural light efficiently while considering occupancy.
+The third rule addresses daytime conditions. It opens the blinds (if they are closed) and turns off the light when the room is occupied at sunrise, utilizing natural light and reducing energy consumption.
+
+Finally, the fourth rule is a special case for daytime. If the room is occupied, the blinds are open, but the natural light (as indicated by the light level in the kitchen) is insufficient (less than 150 lux), the studio light is turned on to ensure adequate illumination. This rule assumes a correlation between the kitchen's light level and the studio's, which is reasonable if both spaces are in the same building and affected similarly by external lighting conditions.

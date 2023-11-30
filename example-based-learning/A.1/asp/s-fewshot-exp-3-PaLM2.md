@@ -315,28 +315,32 @@ studio
 ### RULES
 ```
 % Automation 1
-action(turn_on, studio_light) :- cond(1), cond(2), cond(3).
+action(turn_on, studio_light) :- cond(1), cond(2).
 cond(1) :- observation(studio_occupancy, OB_ID),
 hasSimpleResult(observation(studio_occupancy, OB_ID), "on").
-cond(2) :- observation(studio_light_level, OB_ID),
-hasSimpleResult(observation(studio_light_level, OB_ID), VALUE),
-VALUE < 150. % light level < 150 lux
-cond(3) :- observation(door_sensor_d1, OB_ID),
-hasSimpleResult(observation(door_sensor_d1, OB_ID), "closed").
+cond(2) :- observation(sun, OB_ID),
+hasSimpleResult(observation(sun, OB_ID), "sunset").
 
 % Automation 2
-action(turn_off, studio_light) :- cond(4).
-cond(4) :- observation(studio_occupancy, OB_ID),
+action(turn_off, studio_light) :- cond(3).
+cond(3) :- observation(studio_occupancy, OB_ID),
 hasSimpleResult(observation(studio_occupancy, OB_ID), "off").
 
 % Automation 3
-action(open, studio_cover) :- cond(1), cond(2), cond(3).
-action(turn_off, studio_light) :- cond(1), cond(2), cond(3).
-cond(3) :- observation(sun, OB_ID),
+action(open, studio_cover) :- cond(4), cond(5).
+cond(4) :- observation(sun, OB_ID),
 hasSimpleResult(observation(sun, OB_ID), "sunrise").
+cond(5) :- observation(studio_occupancy, OB_ID),
+hasSimpleResult(observation(studio_occupancy, OB_ID), "on").
 
 % Automation 4
-action(close, studio_cover) :- cond(4).
-cond(4) :- observation(sun, OB_ID),
+action(close, studio_cover) :- cond(6), cond(7).
+cond(6) :- observation(sun, OB_ID),
 hasSimpleResult(observation(sun, OB_ID), "sunset").
+cond(7) :- observation(studio_occupancy, OB_ID),
+hasSimpleResult(observation(studio_occupancy, OB_ID), "off").
 ```
+
+### EXPLANATION
+The first rule turns on the studio light when occupancy is detected and it is nighttime, because there is no natural light. The second rule turns off the studio light when there is no occupancy. The third rule opens the window cover when it is daytime and there is occupancy, in order to let natural light in. The fourth rule closes the window cover when it is nighttime or there is no occupancy, in order to conserve energy and maintain privacy.
+## END
