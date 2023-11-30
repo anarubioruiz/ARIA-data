@@ -270,7 +270,7 @@ kitchen
       event: sunrise
   action:
     service: light.turn_off
-    entity_id: light.kitchen_smart_lamp
+    entity_id: light.kitchen_smart_light
 - description: "Turn on the lamp when occupancy detected at night in the kitchen"
   trigger:
     - platform: state
@@ -287,7 +287,7 @@ kitchen
       state: "on"
   action:
     service: light.turn_on
-    entity_id: light.kitchen_smart_lamp
+    entity_id: light.kitchen_smart_light
 ```
 
 ### EXPLANATION

@@ -60,16 +60,16 @@ den
 ```
 % Automation 1
 action(turn_on, den_light) :- cond(1), cond(2).
-cond(1) :- observation(ps1, OB_ID),
-           hasSimpleResult(observation(ps1, OB_ID), "on").
-cond(2) :- observation(ls1, OB_ID),
-           hasSimpleResult(observation(ls1, OB_ID), VALUE),
+cond(1) :- observation(den_occupancy, OB_ID),
+           hasSimpleResult(observation(den_occupancy, OB_ID), "on").
+cond(2) :- observation(den_light_detector, OB_ID),
+           hasSimpleResult(observation(den_light_detector, OB_ID), VALUE),
            VALUE < 150.  % light level < 150 lux
 
 % Automation 2
 action(turn_off, den_light) :- cond(3).
-cond(3) :- observation(ps1, OB_ID),
-           hasSimpleResult(observation(ps1, OB_ID), "off").
+cond(3) :- observation(den_occupancy, OB_ID),
+           hasSimpleResult(observation(den_occupancy, OB_ID), "off").
 ```
 ## END
 
@@ -85,14 +85,14 @@ kitchen
 
 ### RULES
 ```
-action(turn_on, kitchen_smart_lamp) :- cond(1), cond(2).  % cond(1) and cond(2) are true
+action(turn_on, kitchen_smart_light) :- cond(1), cond(2).  % cond(1) and cond(2) are true
 cond(1) :- observation(kitchen_occupancy_sensor, OB_ID),
            hasSimpleResult(observation(kitchen_occupancy_sensor, OB_ID), "on").
 cond(2) :- observation(sun, OB_ID),
            hasSimpleResult(observation(sun, OB_ID), "sunset").
 
 % Automation 2
-action(turn_off, kitchen_smart_lamp) :- { cond(3); cond(4) } = 1.  % cond(3) or cond(4) is true
+action(turn_off, kitchen_smart_light) :- { cond(3); cond(4) } = 1.  % cond(3) or cond(4) is true
 cond(3) :- observation(kitchen_occupancy_sensor, OB_ID),
            hasSimpleResult(observation(kitchen_occupancy_sensor, OB_ID), "off").
 cond(4) :- observation(sun, OB_ID),
