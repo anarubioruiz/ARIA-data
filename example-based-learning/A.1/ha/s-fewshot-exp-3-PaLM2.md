@@ -392,3 +392,42 @@ illuminate
 studio
 
 <!-- response -->
+
+### RULES
+```
+- description: "Turn on the studio light when occupancy is detected"
+trigger:
+- platform: state
+entity_id: binary_sensor.studio_occupancy
+to: "on"
+action:
+service: light.turn_on
+entity_id: light.studio_light
+- description: "Turn off the studio light when occupancy is not detected"
+trigger:
+- platform: state
+entity_id: binary_sensor.studio_occupancy
+to: "off"
+action:
+service: light.turn_off
+entity_id: light.studio_light
+- description: "Open the window cover when the studio light is turned on"
+trigger:
+- platform: state
+entity_id: light.studio_light
+to: "on"
+action:
+service: cover.open_cover
+entity_id: cover.studio_cover
+- description: "Close the window cover when the studio light is turned off"
+trigger:
+- platform: state
+entity_id: light.studio_light
+to: "off"
+action:
+service: cover.close_cover
+entity_id: cover.studio_cover
+```
+
+### EXPLANATION
+The first rule turns on the studio light when occupancy is detected. The second rule turns off the studio light when occupancy is not detected. The third rule opens the window cover when the studio light is turned on. The fourth rule closes the window cover when the studio light is turned off.

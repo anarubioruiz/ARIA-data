@@ -392,3 +392,69 @@ illuminate
 studio
 
 <!-- response -->
+
+### RULES
+```yaml
+- description: "Turn on studio light when occupancy is detected and light level is low"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.studio_occupancy
+      to: "on"
+    - platform: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 200
+  condition:
+    - condition: state
+      entity_id: binary_sensor.studio_occupancy
+      state: "on"
+    - condition: numeric_state
+      entity_id: sensor.kitchen_light_level
+      below: 200
+  action:
+    service: light.turn_on
+    entity_id: light.studio_light
+
+- description: "Turn off studio light when no occupancy detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.studio_occupancy
+    to: "off"
+  action:
+    service: light.turn_off
+    entity_id: light.studio_light
+
+- description: "Open studio window cover during the day when occupancy detected"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.studio_occupancy
+    to: "on"
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+  action:
+    service: cover.open_cover
+    entity_id: cover.studio_cover
+
+- description: "Close studio window cover at night or when no occupancy detected"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.studio_occupancy
+      to: "off"
+    - platform: sun
+      event: sunset
+  action:
+    service: cover.close_cover
+    entity_id: cover.studio_cover
+```
+
+### EXPLANATION
+1. **Turn on Studio Light:** The first rule turns on the studio light when occupancy is detected and the light level in the kitchen (assumed to be indicative of the studio light level due to proximity) is below 200 lux. This ensures the studio is lit when someone is present and the natural light is insufficient.
+
+2. **Turn off Studio Light:** The second rule turns off the studio light when no occupancy is detected, saving energy.
+
+3. **Open Studio Window Cover During Day:** The third rule opens the studio's window cover during the day when occupancy is detected, maximizing the use of natural light.
+
+4. **Close Studio Window Cover at Night or When Unoccupied:** The fourth rule closes the studio's window cover at night or when no occupancy is detected. This could be for energy efficiency, security, or privacy reasons.
+
+These rules collectively ensure that the studio is properly illuminated when occupied, using natural light during the day and artificial light when natural light is insufficient or unavailable, while also managing the window cover for optimal light and energy usage.
