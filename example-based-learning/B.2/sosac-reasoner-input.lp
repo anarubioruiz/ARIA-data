@@ -24,3 +24,4 @@ sosac_Device(family_room_lamp, smartLight).
 sosac_Device(kitchen_nook_light, smartLight).
 sosac_Device(family_room_sensor, occupancySensor).
 sosac_Device(kitchen_nook_sensor, occupancySensor).
+sosac_Device(family_room_curtains, windowCover).

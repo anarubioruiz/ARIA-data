@@ -86,11 +86,3 @@ action:
 ```
 
 These rules should achieve your goal of illuminating the kitchen nook when its primary light fixture is off or unavailable, by utilizing the smart devices in the family room. Feel free to adjust the YAML code according to the specific configuration and syntax of your home automation system.
-
-<!-- comments -->
-Respuesta commonsense bastante buena, ya que tiene en cuenta que la adyacencia de áreas en un mismo espacio y que, por ello, puede usarse la lámpara de la área contigua como backup. Pero:
-
-- Respuesta no procesable: texto plano, preparado para leer.
-- Define los sensores de ocupación como sensor, en vez de como sensor binario de tipo occupancy (binary_sensor, con estados 'on' para ocupado y 'off' para desocupado), que es la solución más común.
-- Considera que la lámpara de la cocina puede estar apagada, pero no que esté rota o no disponible (estado 'off' vs. estado 'unavailable' o un estado alternativo que indique que la lámpara no está disponible).
-- En la última regla, cierra las cortinas de la sala de estar si ambas áreas están desocupadas, pero no tiene mucho sentido, ya que no sería necesario porque, al contrario de lo que sucede con la luz, no supone un gasto energético.

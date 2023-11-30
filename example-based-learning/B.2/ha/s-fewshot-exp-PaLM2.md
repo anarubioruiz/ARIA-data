@@ -302,6 +302,7 @@ sosac_Device(family_room_lamp,smartLight).
 sosac_Device(kitchen_nook_light,smartLight).
 sosac_Device(family_room_sensor,occupancySensor).
 sosac_Device(kitchen_nook_sensor,occupancySensor).
+sosac_Device(family_room_curtains,windowCover).
 sosac_hasFeatureOfInterest(actID(family_room_sensor,occupied_ob),family_room).
 sosac_hasFeatureOfInterest(actID(family_room_sensor,not_occupied_ob),family_room).
 sosac_hasFeatureOfInterest(actID(kitchen_nook_sensor,occupied_ob),kitchen_nook).
@@ -311,17 +312,21 @@ sosac_hasFeatureOfInterest(actID(family_room_lamp,not_illuminate),family_room).
 sosac_hasFeatureOfInterest(actID(kitchen_nook_light,illuminate),kitchen_nook).
 sosac_hasFeatureOfInterest(actID(kitchen_nook_light,not_illuminate),kitchen_nook).
 sosac_hasResult(actID(family_room_lamp,illuminate),"boolean").
-sosac_hasResult(actID(family_room_lamp,not_illuminate),"boolean").
 sosac_hasResult(actID(kitchen_nook_light,illuminate),"boolean").
+sosac_hasResult(actID(family_room_lamp,not_illuminate),"boolean").
 sosac_hasResult(actID(kitchen_nook_light,not_illuminate),"boolean").
+sosac_hasResult(actID(family_room_curtains,open_cover),"boolean").
+sosac_hasResult(actID(family_room_curtains,close_cover),"boolean").
 sosac_hasResult(actID(family_room_sensor,occupied_ob),"boolean").
 sosac_hasResult(actID(family_room_sensor,not_occupied_ob),"boolean").
 sosac_hasResult(actID(kitchen_nook_sensor,occupied_ob),"boolean").
 sosac_hasResult(actID(kitchen_nook_sensor,not_occupied_ob),"boolean").
 sosac_hasSimpleResult(actID(family_room_lamp,illuminate),"on").
-sosac_hasSimpleResult(actID(family_room_lamp,not_illuminate),"off").
 sosac_hasSimpleResult(actID(kitchen_nook_light,illuminate),"on").
+sosac_hasSimpleResult(actID(family_room_lamp,not_illuminate),"off").
 sosac_hasSimpleResult(actID(kitchen_nook_light,not_illuminate),"off").
+sosac_hasSimpleResult(actID(family_room_curtains,open_cover),"open").
+sosac_hasSimpleResult(actID(family_room_curtains,close_cover),"close").
 sosac_hasSimpleResult(actID(family_room_sensor,occupied_ob),"on").
 sosac_hasSimpleResult(actID(family_room_sensor,not_occupied_ob),"off").
 sosac_hasSimpleResult(actID(kitchen_nook_sensor,occupied_ob),"on").
@@ -330,16 +335,17 @@ sosac_hosts(kitchen_nook,kitchen_nook_sensor).
 sosac_hosts(family_room,family_room_sensor).
 sosac_hosts(kitchen_nook,kitchen_nook_light).
 sosac_hosts(family_room,family_room_lamp).
+sosac_hosts(win1,family_room_curtains).
 sosac_makesActuation(family_room_lamp,actID(family_room_lamp,illuminate)).
-sosac_makesActuation(family_room_lamp,actID(family_room_lamp,not_illuminate)).
 sosac_makesActuation(kitchen_nook_light,actID(kitchen_nook_light,illuminate)).
+sosac_makesActuation(family_room_lamp,actID(family_room_lamp,not_illuminate)).
 sosac_makesActuation(kitchen_nook_light,actID(kitchen_nook_light,not_illuminate)).
+sosac_makesActuation(family_room_curtains,actID(family_room_curtains,open_cover)).
+sosac_makesActuation(family_room_curtains,actID(family_room_curtains,close_cover)).
 sosac_makesObservation(family_room_sensor,actID(family_room_sensor,occupied_ob)).
 sosac_makesObservation(family_room_sensor,actID(family_room_sensor,not_occupied_ob)).
 sosac_makesObservation(kitchen_nook_sensor,actID(kitchen_nook_sensor,occupied_ob)).
 sosac_makesObservation(kitchen_nook_sensor,actID(kitchen_nook_sensor,not_occupied_ob)).
-
-
 
 ### GOAL
 illuminate, exclude primary light fixtures
@@ -351,18 +357,36 @@ kitchen nook
 
 ### RULES
 ```yaml
-- description: "Alternative lighting - turn on family room lamp when occupancy detected at kitchen nook"
+- description: "Alternative lighting - at night, turn on family room lamp when occupancy detected at kitchen nook"
 trigger:
 platform: state
 entity_id: binary_sensor.kitchen_nook_sensor
 to: "on"
 condition:
+- condition: sun
+after: sunset
+before: sunrise
 - condition: state
 entity_id: input_boolean.kitchen_nook_alternative_lighting
 state: "on"
 action:
 service: light.turn_on
 entity_id: light.family_room_lamp
+- description: "Alternative lighting - during the day, open family room curtains when occupancy detected at kitchen nook"
+trigger:
+platform: state
+entity_id: binary_sensor.kitchen_nook_sensor
+to: "on"
+condition:
+- condition: sun
+after: sunrise
+before: sunset
+- condition: state
+entity_id: input_boolean.kitchen_nook_alternative_lighting
+state: "on"
+action:
+service: cover.open_cover
+entity_id: cover.family_room_curtains
 - description: "Alternative lighting - turn off family room lamp when no occupancy detected at kitchen nook"
 trigger:
 platform: state
@@ -372,11 +396,13 @@ condition:
 - condition: state
 entity_id: input_boolean.kitchen_nook_alternative_lighting
 state: "on"
+- condition: state
+entity_id: binary_sensor.family_room_sensor
+state: "off"
 action:
 service: light.turn_off
 entity_id: light.family_room_lamp
 ```
 
 ### EXPLANATION
-The rules illuminate the kitchen nook with fixtures that are not the primary ones. The first rule turns on the family room lamp when occupancy is detected at the kitchen nook. The second rule turns off the family room lamp when no occupancy is detected at the kitchen nook.
-## END
+The rules illuminate the kitchen nook with fixtures that are not the primary ones. The first rule turns on the family room lamp when occupancy is detected at the kitchen nook and it is night (there is no natural light available at night). The second rule opens the family room curtains when occupancy is detected at the kitchen nook and it is day, prioritizing natural light for energy efficiency. The third rule turns off the family room lamp when no occupancy is detected at the kitchen nook and no occupancy is detected at the family room.

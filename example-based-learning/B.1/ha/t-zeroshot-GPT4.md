@@ -61,11 +61,3 @@ action:
     entity_id: light.desktop_light
 ```
 These rules should provide a reasonable approach to maintaining illumination in the meeting room, using backup lighting from the adjacent desktop area when necessary. Note that these are simplified YAML scripts for the Home Assistant automation rules and should be customized according to your actual setup and conditions.
-
-<!-- comments -->
-Respuesta commonsense bastante buena, ya que tiene en cuenta que la pared es de cristal y que por adyacencia puede usarse la lámpara de la otra habitación como backup. Pero:
-
-- The rules are generated based on the assumption that the meeting room light fixture has a status sensor that can be used to determine if it's functional or not. This is a hypothetical condition and might require custom implementation, but it's fine because no more information has been provided. This could vary from one request to another. Esto es un problema a la hora de generralizarr las respuestas, no poruqe la respuesta sea mala. De hecho es muy buena. Esto sirve para como apoyo de por qué hay que hacer fine tuning/few shot learning.
-- Respuesta no procesable: texto plano, preparado para leer.
-- Genera las reglas de iluminación normal, aunque no son requeridas.
-- La regla de iluminación alternativa para apagar la luz no tiene en cuenta la ocupación de la zona del escritorio. Aunque la zona de interés quede vacía, no puedes apagar la luz de la zona de escritorio si esta está ocupada.
