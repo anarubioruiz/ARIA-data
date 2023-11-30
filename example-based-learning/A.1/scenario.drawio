@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-11-10T12:31:15.919Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="q3zYiGNFCR7Dq5thjPtR" version="22.0.3" type="device">
+<mxfile host="Electron" modified="2023-11-30T17:35:49.273Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="q6tybjbfUrqQ0yzJYxSu" version="22.1.2" type="device">
   <diagram id="qc-cw8mjiicPfDOIfQId" name="Page-1">
-    <mxGraphModel dx="1118" dy="1636" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="500" math="0" shadow="0">
+    <mxGraphModel dx="3354" dy="2908" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="500" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -214,15 +214,6 @@
         <mxCell id="0M6jd2dRWZS2fC3PjOVr-44" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;fontColor=#4277BB;labelBackgroundColor=default;fontSize=12;spacingTop=3;image=img/lib/ibm/users/sensor.svg;rotation=-518;" parent="0M6jd2dRWZS2fC3PjOVr-41" vertex="1">
           <mxGeometry x="2" y="1" width="33" height="33" as="geometry" />
         </mxCell>
-        <mxCell id="0M6jd2dRWZS2fC3PjOVr-51" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="287.00000000000006" y="-860" width="31.68" height="31.68" as="geometry" />
-        </mxCell>
-        <mxCell id="0M6jd2dRWZS2fC3PjOVr-53" value="" style="shape=mxgraph.signs.tech.rss;html=1;pointerEvents=1;fillColor=#60a917;strokeColor=#2D7600;verticalLabelPosition=bottom;verticalAlign=top;align=center;flipV=1;flipH=1;fontColor=#ffffff;" parent="1" vertex="1">
-          <mxGeometry x="290.18000000000006" y="-846.7982903779612" width="14.5" height="14.97" as="geometry" />
-        </mxCell>
-        <mxCell id="0M6jd2dRWZS2fC3PjOVr-52" value="" style="shape=mxgraph.signs.tech.rss;html=1;pointerEvents=1;fillColor=#60a917;strokeColor=#2D7600;verticalLabelPosition=bottom;verticalAlign=top;align=center;fontColor=#ffffff;" parent="1" vertex="1">
-          <mxGeometry x="301.18000000000006" y="-857.7982903779612" width="14.5" height="14.97" as="geometry" />
-        </mxCell>
         <mxCell id="0M6jd2dRWZS2fC3PjOVr-54" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;shape=mxgraph.floorplan.wall;strokeWidth=1;rotation=0;" parent="1" vertex="1">
           <mxGeometry x="157.07000000000002" y="-957.45" width="182.45" height="22.45" as="geometry" />
         </mxCell>
@@ -340,7 +331,7 @@
             <mxPoint x="-108.50000000000003" y="179.56999999999994" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="uVuIE0xZOwHS_JLGDCft-1" value="" style="shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#B266FF;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.veeam.2d.alarm;" vertex="1" parent="vrruzYlt1HzjlDkKj_sJ-23">
+        <mxCell id="uVuIE0xZOwHS_JLGDCft-1" value="" style="shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#B266FF;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.veeam.2d.alarm;" parent="vrruzYlt1HzjlDkKj_sJ-23" vertex="1">
           <mxGeometry x="-66.50000000000003" y="141.56999999999994" width="45" height="34.37" as="geometry" />
         </mxCell>
       </root>

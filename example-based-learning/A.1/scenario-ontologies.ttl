@@ -18,7 +18,7 @@
 
 <studio> a bot:Space ;
     bot:adjacentZone <living_room>, <kitchen> ;
-    bot:containsElement <studio_light>, <studio_occupancy>, <studio_light_level>;
+    bot:containsElement <studio_light>, <studio_occupancy> ;
     bot:hasElement <win1> .
 
 <d0> a building:Door ;
@@ -41,6 +41,5 @@
 <os1> a sosac:Device, sosactypes:OccupancySensor .
 <studio_occupancy> a sosac:Device, sosactypes:OccupancySensor .
 <kitchen_occupancy> a sosac:Device, sosactypes:OccupancySensor .
-<studio_light_level> a sosac:Device, sosactypes:LightSensor .
 <kitchen_light_level> a sosac:Device, sosactypes:LightSensor .
 <studio_cover> a sosac:Device, sosactypes:WindowCover .
