@@ -80,11 +80,3 @@ If the den's occupancy sensor is no longer triggered, turn off the music room li
 ```
 
 Please remember to replace the entity IDs (light.den_light, binary_sensor.den_occupancy, etc.) with the actual entity IDs from your Home Assistant setup. Make sure to test these rules to ensure they work as intended.
-
-<!-- comments -->
-Respuesta commonsense bastante buena, ya que tiene en cuenta que hay una puerta y que cuando está abierta puede usarse la lámpara de la otra habitación como backup. Pero:
-
-- No se indica que exista un sensor de puertas, da por hecho que va a poder monitorear el estado de la puerta y basar las reglas en ello. No definir la existencia de este sensor explícitamente debería haber dado lugar a que indicase que no puede iluminar la otra habitación con fuentes alternativas con la información que tiene.
-- Respuesta no procesable: texto plano, preparado para leer.
-- Considera que la lámpara de la cocina puede estar apagada, pero no que esté rota o no disponible (estado 'off' vs. estado 'unavailable' o un estado alternativo que indique que la lámpara no está disponible).
-- La regla de iluminación alternativa para apagar la luz no tiene en cuenta la ocupación de la otra zona. Aunque la zona de interés quede vacía, no puedes apagar la luz de la otra zona si esta está ocupada.

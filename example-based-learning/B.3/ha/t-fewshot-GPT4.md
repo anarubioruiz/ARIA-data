@@ -170,8 +170,3 @@ den
 
 ```
 The rules provided align with the goal of illuminating the target area using alternative light fixtures (i.e., those not in the target area). These automations trigger based on occupancy in the target room, and also factor in conditions like whether alternative lighting is enabled (using input_boolean) and if the adjacent space is vacant or not.
-
-<!-- comments -->
-Al contrario que en la query en la que se proporcionan explicación a las reglas, aquí se asume que por el hecho de ser dos espacios adyacentes, uno puede iluminar al otro sin tener en cuenta nada más. Esto es una prueba clara de que las explicaciones ayudan a entender el razonamiento de las reglas.
-
-La respuesta en este caso no es procesable (incluye texto explicativo al final después de las reglas). Esto se solventa con la sección EXPLANATION, que se incluye en la query final.
