@@ -17,7 +17,6 @@ bot_containsElement(kitchen, kitchen_light_level).
 bot_hasElement(kitchen, win2).
 bot_containsElement(studio, studio_light).
 bot_containsElement(studio, studio_occupancy).
-bot_containsElement(studio, studio_light_level).
 bot_hasElement(studio, win1).
 
 building_Door(d0).
@@ -41,6 +40,5 @@ sosac_Device(main_light, smartLight).
 sosac_Device(os1, occupancySensor).
 sosac_Device(studio_occupancy, occupancySensor).
 sosac_Device(kitchen_occupancy, occupancySensor).
-sosac_Device(studio_light_level, lightSensor).
 sosac_Device(kitchen_light_level, lightSensor).
 sosac_Device(studio_cover, windowCover).

@@ -236,19 +236,14 @@ sosac_Device(main_light,smartLight).
 sosac_Device(os1,occupancySensor).
 sosac_Device(studio_occupancy,occupancySensor).
 sosac_Device(kitchen_occupancy,occupancySensor).
-sosac_Device(studio_light_level,lightSensor).
 sosac_Device(kitchen_light_level,lightSensor).
 sosac_Device(studio_cover,windowCover).
-sosac_Device(door_sensor_d1,doorSensor).
-sosac_hasFeatureOfInterest(actID(door_sensor_d1,open_ob),d1).
-sosac_hasFeatureOfInterest(actID(door_sensor_d1,closed_ob),d1).
 sosac_hasFeatureOfInterest(actID(os1,occupied_ob),living_room).
 sosac_hasFeatureOfInterest(actID(os1,not_occupied_ob),living_room).
 sosac_hasFeatureOfInterest(actID(studio_occupancy,occupied_ob),studio).
 sosac_hasFeatureOfInterest(actID(studio_occupancy,not_occupied_ob),studio).
 sosac_hasFeatureOfInterest(actID(kitchen_occupancy,occupied_ob),kitchen).
 sosac_hasFeatureOfInterest(actID(kitchen_occupancy,not_occupied_ob),kitchen).
-sosac_hasFeatureOfInterest(actID(studio_light_level,illuminance_ob),studio).
 sosac_hasFeatureOfInterest(actID(kitchen_light_level,illuminance_ob),kitchen).
 sosac_hasFeatureOfInterest(actID(sb1,illuminate),living_room).
 sosac_hasFeatureOfInterest(actID(sb1,not_illuminate),living_room).
@@ -265,14 +260,11 @@ sosac_hasResult(actID(main_light,not_illuminate),"boolean").
 sosac_hasResult(actID(studio_cover,open_cover),"boolean").
 sosac_hasResult(actID(studio_cover,close_cover),"boolean").
 sosac_hasResult(actID(os1,occupied_ob),"boolean").
-sosac_hasResult(actID(studio_occupancy,occupied_ob),"boolean").
-sosac_hasResult(actID(kitchen_occupancy,occupied_ob),"boolean").
 sosac_hasResult(actID(os1,not_occupied_ob),"boolean").
+sosac_hasResult(actID(studio_occupancy,occupied_ob),"boolean").
 sosac_hasResult(actID(studio_occupancy,not_occupied_ob),"boolean").
+sosac_hasResult(actID(kitchen_occupancy,occupied_ob),"boolean").
 sosac_hasResult(actID(kitchen_occupancy,not_occupied_ob),"boolean").
-sosac_hasResult(actID(door_sensor_d1,open_ob),"boolean").
-sosac_hasResult(actID(door_sensor_d1,closed_ob),"boolean").
-sosac_hasResult(actID(studio_light_level,illuminance_ob),"number").
 sosac_hasResult(actID(kitchen_light_level,illuminance_ob),"number").
 sosac_hasSimpleResult(actID(sb1,illuminate),"on").
 sosac_hasSimpleResult(actID(studio_light,illuminate),"on").
@@ -283,22 +275,18 @@ sosac_hasSimpleResult(actID(main_light,not_illuminate),"off").
 sosac_hasSimpleResult(actID(studio_cover,open_cover),"open").
 sosac_hasSimpleResult(actID(studio_cover,close_cover),"close").
 sosac_hasSimpleResult(actID(os1,occupied_ob),"on").
-sosac_hasSimpleResult(actID(studio_occupancy,occupied_ob),"on").
-sosac_hasSimpleResult(actID(kitchen_occupancy,occupied_ob),"on").
 sosac_hasSimpleResult(actID(os1,not_occupied_ob),"off").
+sosac_hasSimpleResult(actID(studio_occupancy,occupied_ob),"on").
 sosac_hasSimpleResult(actID(studio_occupancy,not_occupied_ob),"off").
+sosac_hasSimpleResult(actID(kitchen_occupancy,occupied_ob),"on").
 sosac_hasSimpleResult(actID(kitchen_occupancy,not_occupied_ob),"off").
-sosac_hasSimpleResult(actID(door_sensor_d1,open_ob),"open").
-sosac_hasSimpleResult(actID(door_sensor_d1,closed_ob),"closed").
 sosac_hosts(kitchen,kitchen_light_level).
-sosac_hosts(studio,studio_light_level).
 sosac_hosts(kitchen,kitchen_occupancy).
 sosac_hosts(studio,studio_occupancy).
 sosac_hosts(living_room,os1).
 sosac_hosts(kitchen,main_light).
 sosac_hosts(studio,studio_light).
 sosac_hosts(living_room,sb1).
-sosac_hosts(d1,door_sensor_d1).
 sosac_hosts(win1,studio_cover).
 sosac_makesActuation(sb1,actID(sb1,illuminate)).
 sosac_makesActuation(studio_light,actID(studio_light,illuminate)).
@@ -309,14 +297,11 @@ sosac_makesActuation(main_light,actID(main_light,not_illuminate)).
 sosac_makesActuation(studio_cover,actID(studio_cover,open_cover)).
 sosac_makesActuation(studio_cover,actID(studio_cover,close_cover)).
 sosac_makesObservation(os1,actID(os1,occupied_ob)).
-sosac_makesObservation(studio_occupancy,actID(studio_occupancy,occupied_ob)).
-sosac_makesObservation(kitchen_occupancy,actID(kitchen_occupancy,occupied_ob)).
 sosac_makesObservation(os1,actID(os1,not_occupied_ob)).
+sosac_makesObservation(studio_occupancy,actID(studio_occupancy,occupied_ob)).
 sosac_makesObservation(studio_occupancy,actID(studio_occupancy,not_occupied_ob)).
+sosac_makesObservation(kitchen_occupancy,actID(kitchen_occupancy,occupied_ob)).
 sosac_makesObservation(kitchen_occupancy,actID(kitchen_occupancy,not_occupied_ob)).
-sosac_makesObservation(door_sensor_d1,actID(door_sensor_d1,open_ob)).
-sosac_makesObservation(door_sensor_d1,actID(door_sensor_d1,closed_ob)).
-sosac_makesObservation(studio_light_level,actID(studio_light_level,illuminance_ob)).
 sosac_makesObservation(kitchen_light_level,actID(kitchen_light_level,illuminance_ob)).
 
 ### GOAL
@@ -328,8 +313,9 @@ kitchen
 <!-- response -->
 
 ### RULES
+
 ```
-% Automation 1: Turn on kitchen light when the kitchen is occupied and the light level is low
+% Automation 1
 action(turn_on, main_light) :- cond(1), cond(2).
 cond(1) :- observation(kitchen_occupancy, OB_ID),
            hasSimpleResult(observation(kitchen_occupancy, OB_ID), "on").
@@ -337,26 +323,25 @@ cond(2) :- observation(kitchen_light_level, OB_ID),
            hasSimpleResult(observation(kitchen_light_level, OB_ID), VALUE),
            VALUE < 150.  % light level < 150 lux
 
-% Automation 2: Turn off kitchen light when kitchen is not occupied
+% Automation 2
 action(turn_off, main_light) :- cond(3).
 cond(3) :- observation(kitchen_occupancy, OB_ID),
            hasSimpleResult(observation(kitchen_occupancy, OB_ID), "off").
 
-% Automation 3: Turn on kitchen light when the kitchen is occupied and it is nighttime
+% Automation 3
 action(turn_on, main_light) :- cond(1), cond(4).
-cond(4) :- observation(sun, OB_ID),
-           hasSimpleResult(observation(sun, OB_ID), "sunset").
-
-% Automation 4: Turn off kitchen light when it is daytime to use natural light
-action(turn_off, main_light) :- cond(5).
-cond(5) :- observation(sun, OB_ID),
-           hasSimpleResult(observation(sun, OB_ID), "sunrise").
+cond(4) :- observation(kitchen_light_level, OB_ID),
+           hasSimpleResult(observation(kitchen_light_level, OB_ID), VALUE),
+           VALUE >= 150,  % light level >= 150 lux
+           observation(door_sensor_d1, OB_ID),
+           hasSimpleResult(observation(door_sensor_d1, OB_ID), "open").
 ```
 
 ### EXPLANATION
-1. **Automation 1** turns on the kitchen light when the kitchen is occupied and the ambient light level is below 150 lux, indicating it's too dark.
-2. **Automation 2** ensures energy efficiency by turning off the light when the kitchen is not occupied.
-3. **Automation 3** activates the kitchen light during the nighttime when the kitchen is occupied, assuming no natural light is available.
-4. **Automation 4** turns off the kitchen light during the daytime, promoting the use of natural light through the windows. This assumes the presence of windows in the kitchen and no obstruction to natural light.
+1. **Automation 1**: This rule turns on the main light in the kitchen when there is occupancy detected by `kitchen_occupancy` and the light level measured by `kitchen_light_level` is below 150 lux, indicating insufficient natural light.
 
-These rules collectively aim to maintain adequate lighting in the kitchen while optimizing energy usage based on occupancy and natural light conditions.
+2. **Automation 2**: This rule turns off the main light in the kitchen when no occupancy is detected, as there is no need for artificial lighting.
+
+3. **Automation 3**: This additional rule turns on the main light if the kitchen is occupied and the light level is above 150 lux, but the door `d1` is open. This rule accounts for scenarios where even though there is sufficient natural light, the open door might cast shadows or reduce the effective lighting in the kitchen, necessitating artificial light.
+
+These rules ensure the kitchen is illuminated based on occupancy and natural light levels, with consideration for the interaction between different spaces (like the effect of an open door on lighting).
